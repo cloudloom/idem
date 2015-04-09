@@ -6,7 +6,8 @@ import com.tracebucket.idem.domain.Client;
 import java.util.*;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class ClientBuilder {
     private String clientId;

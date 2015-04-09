@@ -8,7 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by sadath on 17-Mar-15.
+ * @author ssm
+ * @since 17-03-15
  */
 public class GroupBuilder {
     private String name;

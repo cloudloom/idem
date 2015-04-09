@@ -20,7 +20,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.transaction.Transactional;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes  = {ApplicationTestConfig.class, JPATestConfig.class})

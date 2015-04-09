@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by sadath on 25-Nov-14.
+ * @author ssm
+ * @since 25-Nov-14
  */
 public class AccessTokenBuilder {
     private String authenticationId;

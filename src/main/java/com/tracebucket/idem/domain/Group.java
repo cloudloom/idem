@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by ffl on 16-03-2015.
+ * @author ffl
+ * @since 16-03-2015
  */
 @Entity(name = "IDEM_GROUP")
 @Table(name = "IDEM_GROUP")

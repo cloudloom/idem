@@ -6,7 +6,8 @@ import com.tracebucket.idem.test.builder.ApprovalBuilder;
 import java.util.Date;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class ApprovalFixture {
     public static Approval standardApproval() {

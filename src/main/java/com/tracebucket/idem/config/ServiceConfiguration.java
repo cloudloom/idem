@@ -6,7 +6,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * Created by ffl on 16-03-2015.
+ * @author ffl
+ * @since 16-03-2015
  */
 @Configuration
 @ComponentScan(basePackages = "com.tracebucket.idem.service.impl", scopedProxy = ScopedProxyMode.INTERFACES)

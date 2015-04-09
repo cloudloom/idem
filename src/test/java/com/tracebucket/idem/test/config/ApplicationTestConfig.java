@@ -9,7 +9,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 /**
- * Created by ffl on 25-04-2014.
+ * @author ffl
+ * @since 25-04-2014
  */
 @Configuration
 public class ApplicationTestConfig {

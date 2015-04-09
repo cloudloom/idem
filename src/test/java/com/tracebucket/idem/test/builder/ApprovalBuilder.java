@@ -7,7 +7,8 @@ import com.tracebucket.idem.domain.User;
 import java.util.Date;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class ApprovalBuilder {
     private Client client;

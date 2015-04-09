@@ -5,7 +5,8 @@ import com.tracebucket.tron.ddd.domain.EntityId;
 import com.tracebucket.tron.ddd.jpa.BaseEntityRepository;
 
 /**
- * Created by sadath on 17-Mar-15.
+ * @author ssm
+ * @since 17-Mar-15
  */
 public interface GroupRepository extends BaseEntityRepository<Group, EntityId> {
     public Group findByName(String name);

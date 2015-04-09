@@ -3,7 +3,8 @@ package com.tracebucket.idem.test.builder;
 import com.tracebucket.idem.domain.Authority;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author sadath
+ * @since 13-03-15
  */
 public class AuthorityBuilder {
     private String role;

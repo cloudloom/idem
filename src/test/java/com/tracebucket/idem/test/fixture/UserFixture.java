@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class UserFixture {
     public static User standardUser() {

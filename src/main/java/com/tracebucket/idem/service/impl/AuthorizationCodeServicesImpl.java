@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by ffl on 18-03-2015.
+ * @author ffl
+ * @since 18-03-2015
  */
 @Service("authorizationCodeServicesImpl")
 public class AuthorizationCodeServicesImpl extends RandomValueAuthorizationCodeServices{

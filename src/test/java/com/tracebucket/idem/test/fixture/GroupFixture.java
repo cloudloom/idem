@@ -8,7 +8,8 @@ import com.tracebucket.idem.test.builder.GroupBuilder;
 import java.util.HashSet;
 
 /**
- * Created by sadath on 17-Mar-15.
+ * @author ssm
+ * @since 17-03-15
  */
 public class GroupFixture {
     public static Group standardGroup() {

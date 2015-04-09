@@ -3,7 +3,8 @@ package com.tracebucket.idem.test.builder;
 import com.tracebucket.idem.domain.RefreshToken;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class RefreshTokenBuilder {
     private String tokenId;

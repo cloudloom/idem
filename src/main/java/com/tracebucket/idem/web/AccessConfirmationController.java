@@ -19,7 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by Vivek on 17-03-2015.
+ * @author ffl
+ * @since 17-03-2015
  */
 @Controller
 @SessionAttributes("authorizationRequest")

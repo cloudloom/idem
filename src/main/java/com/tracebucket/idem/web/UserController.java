@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import java.security.Principal;
 
 /**
- * Created by ffl on 11-03-2015.
+ * @author ffl
+ * @since 11-03-2015
  */
 @RestController
 @SessionAttributes("authorizationRequest")

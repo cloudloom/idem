@@ -4,7 +4,8 @@ import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.test.builder.AuthorityBuilder;
 
 /**
- * Created by sadath on 13-Mar-15.
+ * @author ssm
+ * @since 13-03-15
  */
 public class AuthorityFixture {
     public static Authority userAuthority() {

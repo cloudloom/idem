@@ -28,7 +28,8 @@ import org.springframework.util.Assert;
 import java.util.*;
 
 /**
- * Created by ffl on 16-03-2015.
+ * @author ffl
+ * @since 16-03-2015
  */
 @Service("userDetailsManagerImpl")
 @Transactional

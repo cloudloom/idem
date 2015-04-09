@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * @author FFL
- * @since 11/03/15
+ * @since 11-03-15
  */
 @Configuration
 @EnableResourceServer
@@ -33,7 +33,7 @@ public class OAuth2ResourceConfiguration extends ResourceServerConfigurerAdapter
             protected void doFilterInternal(HttpServletRequest request,
                                             HttpServletResponse response, FilterChain filterChain)
                     throws ServletException, IOException {
-                // We don't want to allow access to a resource with no token so clear
+                // Don't allow access to a resource with no token so clear
                 // the security context in case it is actually an OAuth2Authentication
                 if (tokenExtractor.extract(request) == null) {
                     SecurityContextHolder.clearContext();

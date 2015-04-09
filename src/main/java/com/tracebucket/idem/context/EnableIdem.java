@@ -8,7 +8,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by ffl on 09-04-2015.
+ * @author ffl
+ * @since 09-04-2015
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
