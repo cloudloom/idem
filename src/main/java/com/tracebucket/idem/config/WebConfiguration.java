@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @since 11-03-2015
  */
 @Configuration
-@ComponentScan(basePackages = {"com.mmpsoftware.aurora.idem.web"})
+@ComponentScan(basePackages = {"com.tracebucket.idem.web"})
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override

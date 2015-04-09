@@ -24,8 +24,8 @@ import java.beans.PropertyVetoException;
  * @since 12-03-2015
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "com.mmpsoftware.aurora.idem.repository.jpa")
-@EntityScan(basePackages = "com.mmpsoftware.aurora.idem.domain")
+@EnableJpaRepositories(basePackages = "com.tracebucket.idem.repository.jpa")
+@EntityScan(basePackages = "com.tracebucket.idem.domain")
 @PropertySource(value = "classpath:jpa.properties")
 @EnableTransactionManagement(proxyTargetClass = true)
 public class JpaConfiguration {
