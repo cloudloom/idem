@@ -26,7 +26,7 @@ import java.beans.PropertyVetoException;
 @Configuration
 @EnableJpaRepositories(basePackages = "com.tracebucket.idem.repository.jpa")
 @EntityScan(basePackages = "com.tracebucket.idem.domain")
-@PropertySource(value = "classpath:jpa.properties")
+@PropertySource(value = "classpath:jpa-default.properties")
 @EnableTransactionManagement(proxyTargetClass = true)
 public class JpaConfiguration {
     private static final Logger log = LoggerFactory.getLogger(JpaConfiguration.class);

@@ -19,7 +19,7 @@ public class ApplicationTestConfig {
     public static PropertySourcesPlaceholderConfigurer properties()
     {
         PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-        Resource[] resources = new ClassPathResource[]{new ClassPathResource("jpa-test.properties")};
+        Resource[] resources = new ClassPathResource[]{new ClassPathResource("jpa-default-test.properties")};
         configurer.setLocations(resources);
         configurer.setIgnoreUnresolvablePlaceholders(true);
         log.info("properties loaded.");
