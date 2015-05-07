@@ -1,6 +1,5 @@
 package com.tracebucket.idem.config;
 
-import com.gs.collections.impl.factory.Lists;
 import com.tracebucket.idem.service.impl.JpaTokenStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

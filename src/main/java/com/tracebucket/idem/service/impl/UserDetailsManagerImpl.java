@@ -103,6 +103,10 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
 
     }
 
+    public Group findGroupByName(String name) {
+        return  groupRepository.findByName(name);
+    }
+
     @Override
     public void addUserToGroup(String username, String groupName) {
         Assert.hasText(username);
@@ -245,6 +249,18 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(currentUser, newPassword));
 
         userCache.removeUserFromCache(username);
+    }
+
+    public UserDetails getCurrentUser() {
+        Authentication currentUser = SecurityContextHolder.getContext().getAuthentication();
+        if (currentUser == null) {
+            // This would indicate bad coding somewhere
+            throw new AccessDeniedException("Can't change password as no Authentication object found in context " +
+                    "for current user.");
+        }
+        User user = userRepository.findByUsername(currentUser.getName());
+        org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
+        return u;
     }
 
     public void setUserCache(UserCache userCache) {
