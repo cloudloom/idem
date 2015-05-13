@@ -40,8 +40,9 @@ public class ClientDetailsServiceImpl implements ClientDetailsService, ClientReg
             throw new NoSuchClientException("No client with requested id: " + clientId);
         }
 
-        BaseClientDetails clientDetails = new BaseClientDetails(client);
-        return clientDetails;
+/*        BaseClientDetails clientDetails = new BaseClientDetails(client);
+        return clientDetails;*/
+        return client;
     }
 
     @Override

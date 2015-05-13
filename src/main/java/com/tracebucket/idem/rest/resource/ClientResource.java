@@ -15,7 +15,7 @@ public class ClientResource extends BaseResource {
     private Set<String> authorizedGrantTypes = new HashSet<String>(0);
     private Set<String> registeredRedirectUris = new HashSet<String>(0);
     private Set<String> autoApproveScopes = new HashSet<String>(0);
-    private List<AuthorityResource> authorities = new ArrayList<AuthorityResource>();
+    private Set<AuthorityResource> authorities = new HashSet<AuthorityResource>();
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
     private Map<String, String> additionalInformation = new LinkedHashMap<String, String>();
@@ -76,11 +76,11 @@ public class ClientResource extends BaseResource {
         this.autoApproveScopes = autoApproveScopes;
     }
 
-    public List<AuthorityResource> getAuthorities() {
+    public Set<AuthorityResource> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(List<AuthorityResource> authorities) {
+    public void setAuthorities(Set<AuthorityResource> authorities) {
         this.authorities = authorities;
     }
 

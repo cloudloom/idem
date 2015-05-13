@@ -6,6 +6,7 @@ import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.test.builder.GroupBuilder;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 /**
  * @author ssm
@@ -18,7 +19,8 @@ public class GroupFixture {
                 .withMembers(new HashSet<User>(0))
                 .withImage("Image")
                 .withDescription("Description")
-                .withName("Name")
+                //.withName("Name")
+                .withName(UUID.randomUUID().toString())
                 .build();
         return group;
     }

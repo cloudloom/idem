@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Created by sadath on 29-Apr-15.
  */
-@RestController
+@RestController(value = "idemClientController")
 public class ClientController {
 
     @Autowired

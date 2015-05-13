@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Created by sadath on 29-Apr-15.
  */
-@RestController
+@RestController(value = "idemGroupController")
 public class GroupController {
 
     @Autowired
@@ -92,7 +92,7 @@ public class GroupController {
         return new ResponseEntity<GroupResource>(new GroupResource(), HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/group/{groupName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/group/{groupName}/authorities", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<AuthorityResource>> findGroupAuthorities(@PathVariable("groupName") String groupName) {
         List<GrantedAuthority> groupAuthorities = userDetailsManagerImpl.findGroupAuthorities(groupName);
         List<Authority> authorities = new ArrayList<Authority>();
@@ -116,7 +116,7 @@ public class GroupController {
         return new ResponseEntity<GroupResource>(new GroupResource(), HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @RequestMapping(value = "/group/{groupName}", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/group/{groupName}/authority", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GroupResource> removeGroupAuthority(@PathVariable("groupName") String groupName, @RequestBody AuthorityResource authorityResource) {
         Authority authority = assemblerResolver.resolveEntityAssembler(Authority.class, AuthorityResource.class).toEntity(authorityResource, Authority.class);
         userDetailsManagerImpl.removeGroupAuthority(groupName, authority);

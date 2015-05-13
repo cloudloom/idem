@@ -51,7 +51,7 @@ public class ClientControllerTest {
     }
 
     private void createClient() throws Exception{
-        client = ClientResourceFixture.standardClient();
+        client = ClientResourceFixture.tempClient();
         log.info("Create Client : " + objectMapper.writeValueAsString(client));
         client = restTemplate.postForObject(basePath+"/client", client, ClientResource.class);
         log.info("Created Client : " + objectMapper.writeValueAsString(client));
@@ -84,10 +84,8 @@ public class ClientControllerTest {
         createClient();
         Assert.assertNotNull(client);
         Assert.assertNotNull(client.getUid());
-        String clientSecret = client.getClientSecret();
-        Map<String, String> requestParams = new HashMap<String, String>();
-        requestParams.put("clientSecret", UUID.randomUUID().toString());
-        restTemplate.put(basePath+"/client/" + client.getClientId() + "/secret", null, requestParams);
+        String clientSecret = UUID.randomUUID().toString();
+        restTemplate.put(basePath+"/client/" + client.getClientId() + "/secret?clientSecret="+clientSecret, ClientResource.class);
         client = restTemplate.getForObject(basePath + "/client/" + client.getClientId(), ClientResource.class);
         Assert.assertNotNull(client);
         Assert.assertNotNull(client.getUid());

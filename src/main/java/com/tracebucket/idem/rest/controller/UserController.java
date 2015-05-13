@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by sadath on 29-Apr-15.
  */
-@RestController
+@RestController(value = "idemUserController")
 public class UserController {
     @Autowired
     private AssemblerResolver assemblerResolver;

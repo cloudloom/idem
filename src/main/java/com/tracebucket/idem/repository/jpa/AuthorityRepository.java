@@ -13,5 +13,5 @@ import java.util.List;
  */
 public interface AuthorityRepository extends BaseEntityRepository<Authority, EntityId> {
     public Authority findByRole(String role);
-    public List<Authority> findByRoleIn(Collection<String> roles);
+    public List<Authority> findByRoleIn(List<String> roles);
 }

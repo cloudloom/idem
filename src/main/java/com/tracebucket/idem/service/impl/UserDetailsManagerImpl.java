@@ -74,21 +74,26 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         Assert.hasText(groupName);
         Assert.notNull(authorities);
 
-        List<String> authorityNames = new ArrayList<>(0);
-        authorities.forEach(authority -> authorityNames.add(authority.getAuthority()));
-
-        List<Authority> authorityList = authorityRepository.findByRoleIn(authorityNames);
-
         Group group = new Group();
         group.setName(groupName);
-        group.getAuthorities().addAll(authorityList);
 
+        if(authorities != null && authorities.size() > 0) {
+            List<String> authorityNames = new ArrayList<>(0);
+            authorities.forEach(authority -> authorityNames.add(authority.getAuthority()));
+            List<Authority> authorityList = authorityRepository.findByRoleIn(authorityNames);
+            group.getAuthorities().addAll(authorityList);
+        }
         group = groupRepository.save(group);
     }
 
     @Override
     public void deleteGroup(String groupName) {
         Assert.hasText(groupName);
+        Group group = groupRepository.findByName(groupName);
+        if(group.getMembers() != null) {
+            group.getMembers().stream().forEach(u -> u.getGroups().remove(group));
+        }
+        groupRepository.save(group);
         groupRepository.deleteByName(groupName);
     }
 
@@ -116,6 +121,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         Group group = groupRepository.findByName(groupName);
 
         user.getGroups().add(group);
+        group.getMembers().add(user);
         user = userRepository.save(user);
     }
 
@@ -127,7 +133,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         Group group = groupRepository.findByName(groupName);
         User user = userRepository.findByUsername(username);
         user.getGroups().remove(group);
-
+        group.getMembers().remove(user);
+        groupRepository.save(group);
     }
 
     @Override
@@ -210,6 +217,9 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         if (getEnableAuthorities()) {
             deleteUserAuthorities(username);
         }
+        User user = userRepository.findByUsername(username);
+        user.getGroups().stream().forEach(g -> {g.getMembers().remove(user);});
+        userRepository.save(user);
         userRepository.deleteByUsername(username);
         userCache.removeUserFromCache(username);
     }
@@ -287,8 +297,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
                 User user = userRepository.findByUsername(username);
-        org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
-        return u;
+        //org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
+        return user;
     }
 
     protected UserDetails createUserDetails(String username, UserDetails userFromUserQuery,

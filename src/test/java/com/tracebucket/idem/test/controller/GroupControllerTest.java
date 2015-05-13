@@ -3,7 +3,6 @@ package com.tracebucket.idem.test.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.IdemStarter;
 import com.tracebucket.idem.domain.Authority;
-import com.tracebucket.idem.domain.Group;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.UserResource;
@@ -28,7 +27,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -51,6 +49,8 @@ public class GroupControllerTest {
     private GroupResource group = null;
 
     private UserResource user = null;
+
+    private AuthorityResource authority = null;
 
     @Before
     public void setUp() {
@@ -82,7 +82,7 @@ public class GroupControllerTest {
     @Test
     public void testFindAllGroups() throws Exception {
         createGroup();
-        ResponseEntity<GroupResource[]> responseEntity = restTemplate.getForEntity(basePath + "/groups/", GroupResource[].class);
+        ResponseEntity<String[]> responseEntity = restTemplate.getForEntity(basePath + "/groups/", String[].class);
         Assert.assertNotNull(responseEntity.getBody());
         Assert.assertTrue(responseEntity.getBody().length > 0);
     }
@@ -104,7 +104,7 @@ public class GroupControllerTest {
         user = restTemplate.postForObject(basePath+"/user", user, UserResource.class);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getUid());
-        restTemplate.put(basePath + "/user/" + user.getUsername() + "/group/" + group.getName(), null);
+        restTemplate.put(basePath + "/user/" + user.getUsername() + "/group/" + group.getName(), UserResource.class);
         user = restTemplate.getForObject(basePath + "/user/" + user.getUsername(), UserResource.class);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getUid());
@@ -118,8 +118,8 @@ public class GroupControllerTest {
     @Test
     public void testAddGroupAuthority() throws Exception {
         createGroup();
-        AuthorityResource authorityResource = AuthorityResourceFixture.adminAuthority();
-        restTemplate.put(basePath+"/group/" + group.getName(), authorityResource);
+        authority = restTemplate.postForObject(basePath + "/authority", AuthorityResourceFixture.tempAuthority(), AuthorityResource.class);
+        restTemplate.put(basePath+"/group/" + group.getName(), authority);
         group = restTemplate.getForObject(basePath + "/group/" + group.getName(), GroupResource.class);
         Assert.assertNotNull(group);
         Assert.assertNotNull(group.getUid());
@@ -130,12 +130,12 @@ public class GroupControllerTest {
     @Test
     public void testFindGroupAuthorities() throws Exception {
         createGroup();
-        AuthorityResource authorityResource = AuthorityResourceFixture.adminAuthority();
-        restTemplate.put(basePath+"/group/" + group.getName(), authorityResource);
+        authority = restTemplate.postForObject(basePath + "/authority", AuthorityResourceFixture.tempAuthority(), AuthorityResource.class);
+        restTemplate.put(basePath+"/group/" + group.getName(), authority);
         group = restTemplate.getForObject(basePath + "/group/" + group.getName(), GroupResource.class);
         Assert.assertNotNull(group);
         Assert.assertNotNull(group.getUid());
-        ResponseEntity<AuthorityResource[]> responseEntity = restTemplate.getForEntity(basePath + "/group/" + group.getName(), AuthorityResource[].class);
+        ResponseEntity<AuthorityResource[]> responseEntity = restTemplate.getForEntity(basePath + "/group/" + group.getName() + "/authorities", AuthorityResource[].class);
         Assert.assertNotNull(responseEntity.getBody());
         Assert.assertTrue(responseEntity.getBody().length > 0);
     }
@@ -143,8 +143,8 @@ public class GroupControllerTest {
     @Test
     public void testRemoveGroupAuthority() throws Exception {
         createGroup();
-        AuthorityResource authorityResource = AuthorityResourceFixture.adminAuthority();
-        restTemplate.put(basePath+"/group/" + group.getName(), authorityResource);
+        authority = restTemplate.postForObject(basePath + "/authority", AuthorityResourceFixture.tempAuthority(), AuthorityResource.class);
+        restTemplate.put(basePath+"/group/" + group.getName(), authority);
         group = restTemplate.getForObject(basePath + "/group/" + group.getName(), GroupResource.class);
         Assert.assertNotNull(group);
         Assert.assertNotNull(group.getUid());
@@ -155,7 +155,7 @@ public class GroupControllerTest {
             authorityResourceDelete = authorityResource1;
             break;
         }
-        restTemplate.delete(basePath + "/group/" + group.getName(), authorityResourceDelete);
+        restTemplate.put(basePath + "/group/" + group.getName() + "/authority", authorityResourceDelete);
         group = restTemplate.getForObject(basePath + "/group/" + group.getName(), GroupResource.class);
         Assert.assertNotNull(group);
         Assert.assertNotNull(group.getUid());
@@ -177,6 +177,14 @@ public class GroupControllerTest {
             restTemplate.delete(basePath + "/user/" + user.getUsername());
             try {
                 restTemplate.getForEntity(new URI(basePath + "/user/" + user.getUsername()), UserResource.class);
+            } catch (HttpClientErrorException httpClientErrorException) {
+                Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
+            }
+        }
+        if (authority != null && authority.getUid() != null) {
+            restTemplate.delete(basePath + "/authority/" + authority.getUid());
+            try {
+                restTemplate.getForEntity(new URI(basePath + "/authority/" + authority.getUid()), AuthorityResource.class);
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
             }

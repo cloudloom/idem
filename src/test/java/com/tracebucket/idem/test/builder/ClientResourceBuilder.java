@@ -17,7 +17,7 @@ public class ClientResourceBuilder {
     private Set<String> authorizedGrantTypes = Collections.emptySet();
     private Set<String> registeredRedirectUris;
     private Set<String> autoApproveScopes;
-    private List<AuthorityResource> authorities = Collections.emptyList();
+    private Set<AuthorityResource> authorities = Collections.emptySet();
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
     private Map<String, String> additionalInformation = new LinkedHashMap<>();
@@ -63,7 +63,7 @@ public class ClientResourceBuilder {
         return this;
     }
 
-    public ClientResourceBuilder withAuthorities(List<AuthorityResource> authorities) {
+    public ClientResourceBuilder withAuthorities(Set<AuthorityResource> authorities) {
         this.authorities = authorities;
         return this;
     }

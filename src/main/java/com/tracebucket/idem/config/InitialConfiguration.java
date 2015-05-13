@@ -3,7 +3,6 @@ package com.tracebucket.idem.config;
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
