@@ -23,12 +23,12 @@ public class ClientFixture {
         authorizedGrantTypes.add("password");
 
         Set<String> scopes = new HashSet<String>();
-        scopes.add("organization-read");
-        scopes.add("organization-write");
+        scopes.add("idem-read");
+        scopes.add("idem-write");
 
         Client client = ClientBuilder.aClientBuilder()
-                .withClientId("aurora-gateway")
-                .withClientSecret("aurora-gateway-secret")
+                .withClientId("idem-admin")
+                .withClientSecret("idem-admin-secret")
                         //.withAuthorities(authorities)
                 .withAuthorizedGrantTypes(authorizedGrantTypes)
                 .withScope(scopes)

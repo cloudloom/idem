@@ -18,6 +18,7 @@ import java.util.Set;
  * Created by sadath on 13-May-15.
  */
 @RestController(value = "idemAuthorityController")
+@RequestMapping("/admin")
 public class AuthorityController {
 
     @Autowired

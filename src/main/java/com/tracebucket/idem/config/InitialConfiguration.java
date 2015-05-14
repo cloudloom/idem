@@ -33,5 +33,14 @@ public class InitialConfiguration implements ApplicationListener<ContextRefreshe
         if(authorities.size() > 0) {
             authorityRepository.save(authorities);
         }
+        /**
+         *  [1] Authority: Idem Administrator
+         *  [2] Authority: Tenant Administrator
+         *  [3] User: admin/admin --> Idem Administrator
+         *  [4] User: tenant/tenant --> Tenant Administrator
+         *  [5] Client: idem-admin/idem-admin-secret
+         *  [6] Scope: idem-write
+         *  [7] Scope: idem-read
+         */
     }
 }

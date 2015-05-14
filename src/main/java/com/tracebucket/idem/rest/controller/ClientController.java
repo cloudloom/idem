@@ -20,6 +20,7 @@ import java.util.Set;
  * Created by sadath on 29-Apr-15.
  */
 @RestController(value = "idemClientController")
+@RequestMapping("/admin")
 public class ClientController {
 
     @Autowired

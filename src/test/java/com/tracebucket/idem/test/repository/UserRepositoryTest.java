@@ -52,7 +52,17 @@ public class UserRepositoryTest {
 
     @Before
     public void setUp() {
-
+        if(user != null && user.getEntityId() != null) {
+            userRepository.delete(user.getEntityId());
+            user = userRepository.findOne(user.getEntityId());
+            Assert.assertNull(user);
+        }
+        if(authorities != null && authorities.size() > 0) {
+            authorityRepository.delete(authorities);
+        }
+        if(groups != null && groups.size() > 0) {
+            groupRepository.delete(groups);
+        }
     }
 
     private void createUser() {
@@ -124,7 +134,7 @@ public class UserRepositoryTest {
         Assert.assertEquals(password, user.getPassword());
     }
 
-    @After
+    //@After
     public void tearDown() {
         if(user != null && user.getEntityId() != null) {
             userRepository.delete(user.getEntityId());

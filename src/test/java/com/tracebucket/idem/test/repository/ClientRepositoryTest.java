@@ -108,7 +108,7 @@ public class ClientRepositoryTest {
         Assert.assertNull(client);
     }
 
-    @After
+    //@After
     public void tearDown() {
         if(client != null && client.getEntityId() != null) {
             clientRepository.delete(client.getEntityId());
