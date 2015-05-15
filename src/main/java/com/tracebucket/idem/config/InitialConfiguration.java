@@ -9,6 +9,7 @@ import com.tracebucket.idem.init.defaults.UsersDefault;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import com.tracebucket.idem.repository.jpa.ClientRepository;
 import com.tracebucket.idem.repository.jpa.UserRepository;
+import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,9 @@ public class InitialConfiguration implements ApplicationListener<ContextRefreshe
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private UserDetailsManagerImpl userDetailsManager;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -66,7 +70,7 @@ public class InitialConfiguration implements ApplicationListener<ContextRefreshe
         }
         Client client = clientRepository.findByClientId("idem-admin");
         if(client == null) {
-            clientRepository.save(ClientDefault.defaultClient());
+            clientRepository.save(ClientDefault.defaultClient(authorities));
         }
         /**
          *  [1] Authority: Idem Administrator

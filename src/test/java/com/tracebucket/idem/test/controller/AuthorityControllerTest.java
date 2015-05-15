@@ -2,9 +2,8 @@ package com.tracebucket.idem.test.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.IdemStarter;
-import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
-import com.tracebucket.idem.rest.resource.UserResource;
+import com.tracebucket.idem.test.config.AccessTokenReceiverConfig;
 import com.tracebucket.idem.test.fixture.AuthorityResourceFixture;
 import org.junit.After;
 import org.junit.Assert;
@@ -29,7 +28,7 @@ import java.util.UUID;
  * Created by sadath on 13-May-15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = IdemStarter.class)
+@SpringApplicationConfiguration(classes = {IdemStarter.class, AccessTokenReceiverConfig.class})
 @WebIntegrationTest
 public class AuthorityControllerTest {
     private static final Logger log = LoggerFactory.getLogger(ClientControllerTest.class);
@@ -42,18 +41,22 @@ public class AuthorityControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private AccessTokenReceiverConfig accessTokenReceiver;
+
     private AuthorityResource authority = null;
 
     @Before
     public void setUp() {
+        String token = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
         restTemplate = new RestTemplate();
     }
 
     private void createAuthority() throws Exception{
         authority = AuthorityResourceFixture.tempAuthority();
-        log.info("Create Client : " + objectMapper.writeValueAsString(authority));
+        log.info("Create Authority : " + objectMapper.writeValueAsString(authority));
         authority = restTemplate.postForObject(basePath + "/authority", authority, AuthorityResource.class);
-        log.info("Created Client : " + objectMapper.writeValueAsString(authority));
+        log.info("Created Authority : " + objectMapper.writeValueAsString(authority));
         Assert.assertNotNull(authority);
     }
 

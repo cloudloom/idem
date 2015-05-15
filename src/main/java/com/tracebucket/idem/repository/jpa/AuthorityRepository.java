@@ -4,7 +4,6 @@ import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.tron.ddd.domain.EntityId;
 import com.tracebucket.tron.ddd.jpa.BaseEntityRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 /**

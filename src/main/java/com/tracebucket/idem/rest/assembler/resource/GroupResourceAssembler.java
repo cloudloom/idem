@@ -2,10 +2,8 @@ package com.tracebucket.idem.rest.assembler.resource;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Group;
-import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
-import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.tron.assembler.AssemblerResolver;
 import com.tracebucket.tron.assembler.ResourceAssembler;
 import org.springframework.beans.factory.annotation.Autowired;

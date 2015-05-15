@@ -1,7 +1,6 @@
 package com.tracebucket.idem.config;
 
 import com.tracebucket.tron.context.EnableAutoAssemblerResolution;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**

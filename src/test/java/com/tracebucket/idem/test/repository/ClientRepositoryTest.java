@@ -8,7 +8,6 @@ import com.tracebucket.idem.test.config.ApplicationTestConfig;
 import com.tracebucket.idem.test.config.JPATestConfig;
 import com.tracebucket.idem.test.fixture.AuthorityFixture;
 import com.tracebucket.idem.test.fixture.ClientFixture;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

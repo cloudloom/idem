@@ -4,7 +4,9 @@ import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.ClientResource;
 import com.tracebucket.idem.test.builder.ClientResourceBuilder;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author ssm
