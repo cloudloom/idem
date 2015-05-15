@@ -1,14 +1,23 @@
 package com.tracebucket.idem.config;
 
 import com.tracebucket.idem.domain.Authority;
+import com.tracebucket.idem.domain.Client;
+import com.tracebucket.idem.domain.User;
+import com.tracebucket.idem.init.defaults.AuthoritiesDefault;
+import com.tracebucket.idem.init.defaults.ClientDefault;
+import com.tracebucket.idem.init.defaults.UsersDefault;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
+import com.tracebucket.idem.repository.jpa.ClientRepository;
+import com.tracebucket.idem.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by sadath on 30-Apr-15.
@@ -19,19 +28,45 @@ public class InitialConfiguration implements ApplicationListener<ContextRefreshe
     @Autowired
     private AuthorityRepository authorityRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Authority idemAdministrator = authorityRepository.findByRole("IDEM_ADMINISTRATOR");
         Authority tenantAdministrator = authorityRepository.findByRole("TENANT_ADMINISTRATOR");
         List<Authority> authorities = new ArrayList<Authority>();
         if(idemAdministrator == null) {
-            authorities.add(new Authority("IDEM_ADMINISTRATOR"));
+            authorities.add(AuthoritiesDefault.idemAdministrator());
         }
         if(tenantAdministrator == null) {
-            authorities.add(new Authority("TENANT_ADMINISTRATOR"));
+            authorities.add(AuthoritiesDefault.tenantAdministrator());
         }
         if(authorities.size() > 0) {
             authorityRepository.save(authorities);
+        }
+        User userAdmin = (User)userRepository.findByUsername("admin");
+        User userTenant = (User)userRepository.findByUsername("tenant");
+        List<User> users = new ArrayList<User>();
+        if(userAdmin == null) {
+            Set<Authority> authoritySet = new HashSet<Authority>();
+            authoritySet.add(authorityRepository.findByRole("IDEM_ADMINISTRATOR"));
+            users.add(UsersDefault.defaultIdemAdministrator(authoritySet));
+        }
+        if(userTenant == null) {
+            Set<Authority> authoritySet = new HashSet<Authority>();
+            authoritySet.add(authorityRepository.findByRole("TENANT_ADMINISTRATOR"));
+            users.add(UsersDefault.defaultTenantAdministrator(authoritySet));
+        }
+        if(users.size() > 0) {
+            userRepository.save(users);
+        }
+        Client client = clientRepository.findByClientId("idem-admin");
+        if(client == null) {
+            clientRepository.save(ClientDefault.defaultClient());
         }
         /**
          *  [1] Authority: Idem Administrator
