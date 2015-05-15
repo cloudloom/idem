@@ -1,6 +1,5 @@
 package com.tracebucket.idem.test.config;
 
-import com.tracebucket.idem.init.DefaultDataInitListener;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;

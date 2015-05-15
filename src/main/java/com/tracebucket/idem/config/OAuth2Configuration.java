@@ -32,6 +32,7 @@ import java.security.KeyPair;
 public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
     @Autowired
@@ -52,6 +53,8 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
     @Autowired
     @Qualifier("authorizationCodeServicesImpl")
     private AuthorizationCodeServices authorizationCodeServices;
+
+
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {

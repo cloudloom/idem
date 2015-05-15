@@ -11,6 +11,11 @@ import java.util.Set;
  */
 public class ClientDefault {
     public static Client defaultClient() {
+        Set<String> authorizedGrantTypes = new HashSet<String>();
+        authorizedGrantTypes.add("authorization_code");
+        authorizedGrantTypes.add("refresh_token");
+        authorizedGrantTypes.add("password");
+
         Set<String> scopes = new HashSet<String>();
         scopes.add("idem-read");
         scopes.add("idem-write");
@@ -18,6 +23,7 @@ public class ClientDefault {
                 .withClientId("idem-admin")
                 .withClientSecret("idem-admin-secret")
                 .withScope(scopes)
+                .withAuthorizedGrantTypes(authorizedGrantTypes)
                 .build();
         return client;
     }
