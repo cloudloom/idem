@@ -5,6 +5,7 @@ import com.tracebucket.idem.IdemStarter;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.test.config.AccessTokenReceiverConfig;
 import com.tracebucket.idem.test.fixture.AuthorityResourceFixture;
+import com.tracebucket.idem.test.util.RestRequestBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,12 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.UUID;
 
 /**
@@ -46,18 +48,22 @@ public class AuthorityControllerTest {
 
     private AuthorityResource authority = null;
 
+    private String accessToken = null;
+
     @Before
     public void setUp() {
-        String token = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
+        accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
         restTemplate = new RestTemplate();
     }
 
     private void createAuthority() throws Exception{
         authority = AuthorityResourceFixture.tempAuthority();
         log.info("Create Authority : " + objectMapper.writeValueAsString(authority));
-        authority = restTemplate.postForObject(basePath + "/authority", authority, AuthorityResource.class);
+        ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.POST, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertNotNull(responseEntity.getBody());
+        authority = responseEntity.getBody();
         log.info("Created Authority : " + objectMapper.writeValueAsString(authority));
-        Assert.assertNotNull(authority);
     }
 
     @Test
@@ -71,27 +77,30 @@ public class AuthorityControllerTest {
         createAuthority();
         String role = "UPDATED_ROLE " + UUID.randomUUID();
         authority.setRole(role);
-        restTemplate.put(basePath + "/authority", authority);
-        authority = restTemplate.getForObject(basePath + "/authority/" + authority.getUid(), AuthorityResource.class);
-        Assert.assertNotNull(authority);
-        Assert.assertNotNull(authority.getUid());
-        Assert.assertEquals(role, authority.getRole());
+        ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.PUT, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertNotNull(responseEntity.getBody());
+        authority = responseEntity.getBody();
+        Assert.assertEquals(role, responseEntity.getBody().getRole());
     }
 
     @Test
     public void testFindOne() throws Exception {
         createAuthority();
-        authority = restTemplate.getForObject(basePath + "/authority/" + authority.getUid(), AuthorityResource.class);
-        Assert.assertNotNull(authority);
-        Assert.assertNotNull(authority.getUid());
+        ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.GET, RestRequestBuilder.build(accessToken), AuthorityResource.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertNotNull(responseEntity.getBody());
+        authority = responseEntity.getBody();
     }
 
     @After
     public void tearDown() throws Exception {
         if (authority != null && authority.getUid() != null) {
-            restTemplate.delete(basePath + "/authority/" + authority.getUid());
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.DELETE, RestRequestBuilder.build(accessToken), Boolean.class);
+            Assert.assertNotNull(responseEntity);
+            Assert.assertTrue(responseEntity.getBody());
             try {
-                restTemplate.getForEntity(new URI(basePath + "/authority/" + authority.getUid()), AuthorityResource.class);
+                restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.GET, RestRequestBuilder.build(accessToken), AuthorityResource.class);
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
             }

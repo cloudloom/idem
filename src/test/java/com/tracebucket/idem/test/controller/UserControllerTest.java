@@ -5,6 +5,7 @@ import com.tracebucket.idem.IdemStarter;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.UserResource;
+import com.tracebucket.idem.test.config.AccessTokenReceiverConfig;
 import com.tracebucket.idem.test.fixture.AuthorityResourceFixture;
 import com.tracebucket.idem.test.fixture.GroupResourceFixture;
 import com.tracebucket.idem.test.fixture.UserResourceFixture;
@@ -30,7 +31,7 @@ import java.net.URI;
  * Created by sadath on 30-Apr-15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = IdemStarter.class)
+@SpringApplicationConfiguration(classes = {IdemStarter.class, AccessTokenReceiverConfig.class})
 @WebIntegrationTest
 public class UserControllerTest {
     private static final Logger log = LoggerFactory.getLogger(UserControllerTest.class);
@@ -43,6 +44,11 @@ public class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private AccessTokenReceiverConfig accessTokenReceiver;
+
+    private String accessToken = null;
+
     private UserResource user = null;
 
     private GroupResource group = null;
@@ -51,6 +57,7 @@ public class UserControllerTest {
 
     @Before
     public void setUp() {
+        accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
         restTemplate = new RestTemplate();
     }
 
