@@ -61,8 +61,7 @@ public class AuthorityControllerTest {
         log.info("Create Authority : " + objectMapper.writeValueAsString(authority));
         ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.POST, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        authority = responseEntity.getBody();
+        Assert.assertNotNull(authority = responseEntity.getBody());
         log.info("Created Authority : " + objectMapper.writeValueAsString(authority));
     }
 
@@ -79,8 +78,7 @@ public class AuthorityControllerTest {
         authority.setRole(role);
         ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.PUT, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        authority = responseEntity.getBody();
+        Assert.assertNotNull(authority = responseEntity.getBody());
         Assert.assertEquals(role, responseEntity.getBody().getRole());
     }
 
@@ -89,8 +87,7 @@ public class AuthorityControllerTest {
         createAuthority();
         ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.GET, RestRequestBuilder.build(accessToken), AuthorityResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        authority = responseEntity.getBody();
+        Assert.assertNotNull(authority = responseEntity.getBody());
     }
 
     @After

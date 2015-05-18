@@ -42,6 +42,9 @@ public class AccessTokenReceiverConfig {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<OAuth2AccessToken> response = restTemplate.exchange(basePath + "/oauth/token?grant_type=password&username=" + userName + "&password=" + password, HttpMethod.POST, request, OAuth2AccessToken.class);
         OAuth2AccessToken token = response.getBody();
-        return token.getValue();
+        if(token != null) {
+            return token.getValue();
+        }
+        return null;
     }
 }

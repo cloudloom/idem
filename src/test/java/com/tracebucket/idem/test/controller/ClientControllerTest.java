@@ -61,8 +61,7 @@ public class ClientControllerTest {
         log.info("Create Client : " + objectMapper.writeValueAsString(client));
         ResponseEntity<ClientResource> responseEntity = restTemplate.exchange(basePath + "/admin/client", HttpMethod.POST, RestRequestBuilder.build(client, accessToken), ClientResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        client = responseEntity.getBody();
+        Assert.assertNotNull(        client = responseEntity.getBody());
         log.info("Created Client : " + objectMapper.writeValueAsString(client));
     }
 
@@ -81,9 +80,7 @@ public class ClientControllerTest {
         client.getScope().clear();
         ResponseEntity<ClientResource> responseEntity = restTemplate.exchange(basePath + "/admin/client", HttpMethod.PUT, RestRequestBuilder.build(client, accessToken), ClientResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        client = responseEntity.getBody();
-        Assert.assertNotNull(client);
+        Assert.assertNotNull(client = responseEntity.getBody());
         Assert.assertNotNull(client.getUid());
         Assert.assertEquals(0, client.getAuthorizedGrantTypes().size());
         Assert.assertEquals(0, client.getScope().size());
@@ -97,9 +94,7 @@ public class ClientControllerTest {
         String clientSecret = UUID.randomUUID().toString();
         ResponseEntity<ClientResource> responseEntity = restTemplate.exchange(basePath + "/admin/client/" + client.getClientId() + "/secret?clientSecret="+clientSecret, HttpMethod.PUT, RestRequestBuilder.build(client, accessToken), ClientResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        client = responseEntity.getBody();
-        Assert.assertNotNull(client);
+        Assert.assertNotNull(client = responseEntity.getBody());
         Assert.assertNotNull(client.getUid());
         Assert.assertEquals(clientSecret, client.getClientSecret());
     }
@@ -111,8 +106,7 @@ public class ClientControllerTest {
         log.info("Find Client with UID : " + clientId);
         ResponseEntity<ClientResource> responseEntity = restTemplate.exchange(basePath + "/admin/client/" + clientId, HttpMethod.GET, RestRequestBuilder.build(accessToken), ClientResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        client = responseEntity.getBody();
+        Assert.assertNotNull(client = responseEntity.getBody());
         Assert.assertNotNull(client.getUid());
         Assert.assertEquals(clientId, client.getClientId());
         log.info("Found : " + objectMapper.writeValueAsString(client));
