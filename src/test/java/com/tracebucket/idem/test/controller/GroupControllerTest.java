@@ -74,8 +74,7 @@ public class GroupControllerTest {
         log.info("Create Group : " + objectMapper.writeValueAsString(group));
         ResponseEntity<GroupResource> responseEntity = restTemplate.exchange(basePath + "/admin/group", HttpMethod.POST, RestRequestBuilder.build(group, accessToken), GroupResource.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(responseEntity.getBody());
-        group = responseEntity.getBody();
+        Assert.assertNotNull(group = responseEntity.getBody());
         log.info("Created Group : " + objectMapper.writeValueAsString(group));
     }
 
@@ -159,10 +158,9 @@ public class GroupControllerTest {
 
         ResponseEntity<GroupResource> groupResponseEntity = restTemplate.exchange(basePath + "/admin/group/" + group.getName(), HttpMethod.PUT, RestRequestBuilder.build(authority, accessToken), GroupResource.class);
 
-       /* restTemplate.put(basePath+"/group/" + group.getName(), authority);
-        group = restTemplate.getForObject(basePath + "/group/" + group.getName(), GroupResource.class);
-     */   Assert.assertNotNull(groupResponseEntity);
+        Assert.assertNotNull(groupResponseEntity);
         Assert.assertNotNull(group.getUid());
+
         ResponseEntity<AuthorityResource[]> responseEntity = restTemplate.exchange(basePath + "/admin/group/" + group.getName() + "/authorities", HttpMethod.GET, RestRequestBuilder.build(authority, accessToken), AuthorityResource[].class);
         Assert.assertNotNull(responseEntity.getBody());
         Assert.assertTrue(responseEntity.getBody().length > 0);
@@ -212,7 +210,8 @@ public class GroupControllerTest {
         if(user != null && user.getUid() != null) {
             ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/user/" + user.getUsername(), HttpMethod.DELETE, RestRequestBuilder.build(accessToken), Boolean.class);
             Assert.assertNotNull(responseEntity);
-            Assert.assertTrue(responseEntity.getBody());            try {
+            Assert.assertTrue(responseEntity.getBody());
+            try {
                 restTemplate.exchange(basePath + "/admin/user/" + user.getUsername(), HttpMethod.GET, RestRequestBuilder.build(accessToken), UserResource.class);
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
@@ -221,7 +220,8 @@ public class GroupControllerTest {
         if (authority != null && authority.getUid() != null) {
             ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.DELETE, RestRequestBuilder.build(accessToken), Boolean.class);
             Assert.assertNotNull(responseEntity);
-            Assert.assertTrue(responseEntity.getBody());            try {
+            Assert.assertTrue(responseEntity.getBody());
+            try {
                 restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.GET, RestRequestBuilder.build(accessToken), AuthorityResource.class);
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());

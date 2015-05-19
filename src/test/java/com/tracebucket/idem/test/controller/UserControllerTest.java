@@ -198,7 +198,8 @@ public class UserControllerTest {
         if (authority != null && authority.getUid() != null) {
             ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.DELETE, RestRequestBuilder.build(accessToken), Boolean.class);
             Assert.assertNotNull(responseEntity);
-            Assert.assertTrue(responseEntity.getBody());            try {
+            Assert.assertTrue(responseEntity.getBody());
+            try {
                 restTemplate.exchange(basePath + "/admin/authority/" + authority.getUid(), HttpMethod.GET, RestRequestBuilder.build(accessToken), AuthorityResource.class);
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
