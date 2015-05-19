@@ -254,6 +254,9 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
 
         logger.debug("Changing password for user '"+ username + "'");
 
+/*        User user = (User)loadUserByUsername(currentUser.getName());
+        user.setPassword(newPassword);
+        this.updateUser(user);*/
         userRepository.updatePassword(newPassword, username);
 
         SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(currentUser, newPassword));
