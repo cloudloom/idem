@@ -104,7 +104,6 @@ public class UserControllerTest {
         Assert.assertEquals(1, user.getAuthorities().size());
     }
 
-/*
     @Test
     public void testChangePassword() throws Exception {
         createUser();
@@ -115,7 +114,6 @@ public class UserControllerTest {
         Assert.assertNotNull(user = responseEntity.getBody());
         Assert.assertEquals(newPassword, user.getPassword());
     }
-*/
 
     @Test
     public void testUserExists() throws Exception {
