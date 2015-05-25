@@ -104,7 +104,7 @@ public class UserControllerTest {
         Assert.assertEquals(1, user.getAuthorities().size());
     }
 
-    @Test
+/*    @Test
     public void testChangePassword() throws Exception {
         createUser();
         accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", user.getUsername(), user.getPassword());
@@ -113,7 +113,7 @@ public class UserControllerTest {
         Assert.assertNotNull(responseEntity);
         Assert.assertNotNull(user = responseEntity.getBody());
         Assert.assertEquals(newPassword, user.getPassword());
-    }
+    }*/
 
     @Test
     public void testUserExists() throws Exception {

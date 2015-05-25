@@ -6,7 +6,7 @@
 
     <groupId>com.tracebucket.idem</groupId>
     <artifactId>idem</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 
 
     <properties>
@@ -137,7 +137,7 @@
                             <outputDirectory>${basedir}/target/wro</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/wro</directory>
+                                    <directory>src/main/resources/wro</directory>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>
@@ -162,8 +162,8 @@
                     <cssDestinationFolder>${project.build.directory}/generated-resources/static/css</cssDestinationFolder>
                     <jsDestinationFolder>${project.build.directory}/generated-resources/static/js</jsDestinationFolder>
                     <wroFile>${project.build.directory}/wro/wro.xml</wroFile>
-                    <extraConfigFile>${basedir}/src/main/wro/wro.properties</extraConfigFile>
-                    <contextFolder>${basedir}/src/main/wro</contextFolder>
+                    <extraConfigFile>${basedir}/src/main/resources/wro/wro.properties</extraConfigFile>
+                    <contextFolder>${basedir}/src/main/resources/wro</contextFolder>
                 </configuration>
                 <dependencies>
                     <dependency>
