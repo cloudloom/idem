@@ -78,7 +78,8 @@ and the necessary beans for Idem will be enabled.
     {[/admin/group],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
     {[/admin/group/{groupName}/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
     {[/admin/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]} {[/admin/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]} 
+    {[/admin/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
     {[/admin/group/{groupName}/users],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
     {[/admin/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
     {[/admin/group/{oldName}/{newName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
