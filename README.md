@@ -95,5 +95,3 @@ and the necessary beans for Idem will be enabled.
     {[/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
     {[/error],methods=[],params=[],headers=[],consumes=[],produces=[text/html],custom=[]}
     [/login]
-    [/oauth/confirm_access]
-    
