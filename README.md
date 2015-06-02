@@ -54,7 +54,7 @@ and the necessary beans for Idem will be enabled.
 
     $
     
-<h5>Idem Endpoints</h5>
+<h5>Endpoints</h5>
 
     BasePath : http://localhost:40080/idem
     
