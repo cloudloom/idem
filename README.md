@@ -1,12 +1,12 @@
 # idem
 
-<h5> Run as a stand alone server: </h5>
+<h5> Run as a stand alone server : </h5>
 Download or clone from git and then use maven(3.*) and Java(1.8 or better)
 
     $ git clone https://github.com/tracebucket/idem.git
     $ mvn spring-boot:run 
   
-<h5>Add to an existing project: </h5>  
+<h5>Add to an existing project : </h5>  
  Add as a dependency like
 
     <dependency>
@@ -38,7 +38,7 @@ and the necessary beans for Idem will be enabled.
 - Service configuration
 - Controller and Assembler configuration
 
-<i> Curl command to get access token: </i>
+<i> Curl command to get access token : </i>
 
     $ curl -v -X POST -H "Content-Type: application/json" -H "Authorization: Basic aWRlbS1hZG1pbjppZGVtLWFkbWluLXNlY3JldA==" "http://192.168.1.24:40080/idem/oauth/token?grant_type=password&username=user&password=password"
 
@@ -46,7 +46,7 @@ and the necessary beans for Idem will be enabled.
 
     $
 
-<i> Curl command to get authorities: </i>
+<i> Curl command to get authorities : </i>
 
     $ curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://192.168.1.24:40080/idem/admin/authorities"
 
