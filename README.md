@@ -36,7 +36,7 @@ and the necessary beans for Idem will be enabled.
 - Jpa configuration
 - Service configuration
 - Controller and Assembler configuration
-- 
+
 Curl command to get access token
 
     $ curl -v -X POST -H "Content-Type: application/json" -H "Authorization: Basic aWRlbS1hZG1pbjppZGVtLWFkbWluLXNlY3JldA==" "http://192.168.1.24:40080/idem/oauth/token?grant_type=password&username=user&password=password"
