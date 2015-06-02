@@ -74,7 +74,7 @@ public class GroupRepositoryTest {
         Assert.assertNotNull(group);
         Assert.assertNotNull(group.getEntityId());
         members.add(userRepository.save(UserFixture.standardUser()));
-        authorities.add(authorityRepository.save(AuthorityFixture.userAuthority()));
+        authorities.add(authorityRepository.save(AuthorityFixture.tempAuthority()));
         group.getAuthorities().addAll(authorities);
         group.getMembers().addAll(members);
         group = groupRepository.save(group);

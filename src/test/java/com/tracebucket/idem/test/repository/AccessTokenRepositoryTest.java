@@ -81,7 +81,7 @@ public class AccessTokenRepositoryTest {
         Assert.assertNotNull(accessToken);
         Assert.assertNotNull(accessToken.getAuthenticationId());
         user = userRepository.save(UserFixture.standardUser());
-        client = clientRepository.save(ClientFixture.standardClient());
+        client = clientRepository.save(ClientFixture.tempClient());
         refreshToken = refreshTokenRepository.save(RefreshTokenFixture.standardRefreshToken());
         accessToken.setUser(user);
         accessToken.setClient(client);
@@ -146,7 +146,7 @@ public class AccessTokenRepositoryTest {
         Assert.assertNotNull(accessToken);
         Assert.assertNotNull(accessToken.getAuthenticationId());
         user = userRepository.save(UserFixture.standardUser());
-        client = clientRepository.save(ClientFixture.standardClient());
+        client = clientRepository.save(ClientFixture.tempClient());
         accessToken.setUser(user);
         accessToken.setClient(client);
         accessToken = accessTokenRepository.save(accessToken);
@@ -160,7 +160,7 @@ public class AccessTokenRepositoryTest {
         createAccessToken();
         Assert.assertNotNull(accessToken);
         Assert.assertNotNull(accessToken.getAuthenticationId());
-        client = clientRepository.save(ClientFixture.standardClient());
+        client = clientRepository.save(ClientFixture.tempClient());
         accessToken.setClient(client);
         accessToken = accessTokenRepository.save(accessToken);
         List<AccessToken> accessTokens = accessTokenRepository.findByClient(accessToken.getClient().getClientId());

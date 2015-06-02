@@ -37,7 +37,7 @@ public class AuthorityRepositoryTest {
     }
 
     private void createAuthority() {
-        authority = AuthorityFixture.userAuthority();
+        authority = AuthorityFixture.tempAuthority();
         authority = authorityRepository.save(authority);
     }
 

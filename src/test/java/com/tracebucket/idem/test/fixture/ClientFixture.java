@@ -5,6 +5,7 @@ import com.tracebucket.idem.test.builder.ClientBuilder;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author ssm
@@ -35,4 +36,30 @@ public class ClientFixture {
                 .build();
         return client;
     }
+
+    public static Client tempClient() {
+
+/*        List<Authority> authorities = new ArrayList<Authority>();
+        authorities.add(AuthorityFixture.userAuthority());
+        authorities.add(AuthorityFixture.adminAuthority());*/
+
+        Set<String> authorizedGrantTypes = new HashSet<String>();
+        authorizedGrantTypes.add("authorization_code");
+        authorizedGrantTypes.add("refresh_token");
+        authorizedGrantTypes.add("password");
+
+        Set<String> scopes = new HashSet<String>();
+        scopes.add(UUID.randomUUID().toString());
+        scopes.add(UUID.randomUUID().toString());
+
+        Client client = com.tracebucket.idem.init.builder.ClientBuilder.aClientBuilder()
+                .withClientId(UUID.randomUUID().toString())
+                .withClientSecret(UUID.randomUUID().toString())
+                        //.withAuthorities(authorities)
+                .withAuthorizedGrantTypes(authorizedGrantTypes)
+                .withScope(scopes)
+                .build();
+        return client;
+    }
+
 }

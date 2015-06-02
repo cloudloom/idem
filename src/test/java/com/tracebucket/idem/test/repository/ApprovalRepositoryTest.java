@@ -72,7 +72,7 @@ public class ApprovalRepositoryTest {
         Assert.assertNotNull(approval);
         Assert.assertNotNull(approval.getEntityId());
         user = userRepository.save(UserFixture.standardUser());
-        client = clientRepository.save(ClientFixture.standardClient());
+        client = clientRepository.save(ClientFixture.tempClient());
         approval.setUser(user);
         approval.setClient(client);
         approval = approvalRepository.save(approval);

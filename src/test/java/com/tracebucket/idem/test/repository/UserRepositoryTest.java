@@ -11,6 +11,7 @@ import com.tracebucket.idem.test.config.JPATestConfig;
 import com.tracebucket.idem.test.fixture.AuthorityFixture;
 import com.tracebucket.idem.test.fixture.GroupFixture;
 import com.tracebucket.idem.test.fixture.UserFixture;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,7 +84,7 @@ public class UserRepositoryTest {
         createUser();
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getEntityId());
-        Authority userAuthority = authorityRepository.findByRole(AuthorityFixture.userAuthority().getAuthority());
+/*        Authority userAuthority = authorityRepository.findByRole(AuthorityFixture.userAuthority().getAuthority());
         Authority adminAuthority = authorityRepository.findByRole(AuthorityFixture.adminAuthority().getAuthority());
         if(userAuthority != null) {
             authorities.add(userAuthority);
@@ -92,16 +93,16 @@ public class UserRepositoryTest {
         }
         if(adminAuthority != null) {
             authorities.add(adminAuthority);
-        } else {
-            authorities.add(authorityRepository.save(AuthorityFixture.adminAuthority()));
-        }
+        } else {*/
+            authorities.add(authorityRepository.save(AuthorityFixture.tempAuthority()));
+/*        }*/
         groups.add(groupRepository.save(GroupFixture.standardGroup()));
         user.setAuthorities(authorities);
         user.setGroups(groups);
         user = userRepository.save(user);
         Assert.assertNotNull(user);
         Assert.assertNotNull(user.getEntityId());
-        Assert.assertEquals(2, user.getAuthorities().size());
+        Assert.assertEquals(1, user.getAuthorities().size());
         Assert.assertEquals(1, user.getGroups().size());
 
     }
@@ -133,7 +134,7 @@ public class UserRepositoryTest {
         Assert.assertEquals(password, user.getPassword());
     }
 
-    //@After
+    @After
     public void tearDown() {
         if(user != null && user.getEntityId() != null) {
             userRepository.delete(user.getEntityId());

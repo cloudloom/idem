@@ -5,6 +5,7 @@ import com.tracebucket.idem.test.builder.UserBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author ssm
@@ -18,7 +19,8 @@ public class UserFixture {
         tenantInformation.put("TENANT_ID", "12345");
         tenantInformation.put("TENANT_NAME", "TnT");
         User user = UserBuilder.anUserBuilder()
-                .withUsername("user")
+                //.withUsername("user")
+                .withUsername(UUID.randomUUID().toString())
                 .withPassword("password")
                 .withAccountNonExpired(true)
                 .withAccountNonLocked(true)

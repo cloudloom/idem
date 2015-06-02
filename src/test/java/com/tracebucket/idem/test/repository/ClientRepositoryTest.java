@@ -8,6 +8,7 @@ import com.tracebucket.idem.test.config.ApplicationTestConfig;
 import com.tracebucket.idem.test.config.JPATestConfig;
 import com.tracebucket.idem.test.fixture.AuthorityFixture;
 import com.tracebucket.idem.test.fixture.ClientFixture;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class ClientRepositoryTest {
     }
 
     private void createClient() {
-        client = ClientFixture.standardClient();
+        client = ClientFixture.tempClient();
         client = clientRepository.save(client);
     }
 
@@ -64,7 +65,7 @@ public class ClientRepositoryTest {
         createClient();
         Assert.assertNotNull(client);
         Assert.assertNotNull(client.getEntityId());
-        Authority user = authorityRepository.findByRole(AuthorityFixture.userAuthority().getAuthority());
+/*        Authority user = authorityRepository.findByRole(AuthorityFixture.userAuthority().getAuthority());
         Authority admin = authorityRepository.findByRole(AuthorityFixture.adminAuthority().getAuthority());
         if(user != null) {
             authorities.add(user);
@@ -73,13 +74,13 @@ public class ClientRepositoryTest {
         }
         if(admin != null) {
             authorities.add(admin);
-        } else {
-            authorities.add(authorityRepository.save(AuthorityFixture.adminAuthority()));
-        }
+        } else {*/
+            authorities.add(authorityRepository.save(AuthorityFixture.tempAuthority()));
+/*        }*/
         client.setAuthorities(authorities);
         client = clientRepository.save(client);
         Assert.assertNotNull(client);
-        Assert.assertEquals(2, client.getAuthorities().size());
+        Assert.assertEquals(1, client.getAuthorities().size());
     }
 
     @Test
@@ -107,7 +108,7 @@ public class ClientRepositoryTest {
         Assert.assertNull(client);
     }
 
-    //@After
+    @After
     public void tearDown() {
         if(client != null && client.getEntityId() != null) {
             clientRepository.delete(client.getEntityId());
