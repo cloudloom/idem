@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Idem by tracebucket</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Idem</h1>
+      <h2 class="project-tagline">OAuth 2 Authorization Server</h2>
+      <a href="https://github.com/tracebucket/idem" class="btn">View on GitHub</a>
+      <a href="https://github.com/tracebucket/idem/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/tracebucket/idem/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="idem" class="anchor" href="#idem" aria-hidden="true"><span class="octicon octicon-link"></span></a>idem</h1>
+
+<h5>
+<a id="-run-as-a-stand-alone-server--" class="anchor" href="#-run-as-a-stand-alone-server--" aria-hidden="true"><span class="octicon octicon-link"></span></a> Run as a stand alone server : </h5>
+
+<p>Download or clone from git and then use maven(3.*) and Java(1.8 or better)</p>
+
+<pre><code>$ git clone https://github.com/tracebucket/idem.git
+$ mvn spring-boot:run 
+</code></pre>
+
+<h5>
+<a id="add-to-an-existing-project--" class="anchor" href="#add-to-an-existing-project--" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add to an existing project : </h5>  
+
+<p>Add as a dependency like</p>
+
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.tracebucket.idem&lt;/groupId&gt;
+    &lt;artifactId&gt;idem&lt;/artifactId&gt;
+    &lt;version&gt;1.2&lt;/version&gt;
+&lt;/dependency&gt;
+
+    &lt;repository&gt;
+        &lt;snapshots&gt;
+            &lt;enabled&gt;false&lt;/enabled&gt;
+        &lt;/snapshots&gt;
+        &lt;id&gt;bintray-tracebucket-X1&lt;/id&gt;
+        &lt;name&gt;bintray&lt;/name&gt;
+        &lt;url&gt;http://dl.bintray.com/tracebucket/X1&lt;/url&gt;
+    &lt;/repository&gt;
+</code></pre>
+
+<p>add @EnableIdem (multiple X1 components can be enabled in the same config file) in a config class like below </p>
+
+<pre><code> @Configuration
+ @EnableIdem
+ public class X1Configuration{
+ }
+</code></pre>
+
+<p>and the necessary beans for Idem will be enabled.</p>
+
+<ul>
+<li>Jpa configuration</li>
+<li>Service configuration</li>
+<li>Controller and Assembler configuration</li>
+</ul>
+
+<p><i> Curl command to get access token : </i></p>
+
+<pre><code>$ curl -v -X POST -H "Content-Type: application/json" -H "Authorization: Basic aWRlbS1hZG1pbjppZGVtLWFkbWluLXNlY3JldA==" "http://192.168.1.24:40080/idem/oauth/token?grant_type=password&amp;username=user&amp;password=password"
+
+{"access_token":"example_access_token","token_type":"bearer","refresh_token":"example_refresh_token","expires_in":41784,"scope":"idem-write idem-read","jti":"24939648-3cbb-42dd-aefd-7b46e11b860a"}
+
+$
+</code></pre>
+
+<p><i> Curl command to get authorities : </i></p>
+
+<pre><code>$ curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://192.168.1.24:40080/idem/admin/authorities"
+
+[{"uid":"12285c20-85eb-4d57-98f0-ae4d3b12d855","passive":false,"role":"IDEM_ADMINISTRATOR"}]
+
+$
+</code></pre>
+
+<h5>
+<a id="endpoints" class="anchor" href="#endpoints" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endpoints</h5>
+
+<pre><code>BasePath : http://localhost:40080/idem
+
+Endpoints : 
+
+{[/oauth/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+{[/oauth/confirm_access],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+{[/user],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+{[/admin/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/authority/{uid}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/authority],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/authority/{uid}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/authorities],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/client/{clientId}/secret],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/client/{clientId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/client],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/client],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/clients],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/client/{clientId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]} 
+{[/admin/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}/users],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group/{oldName}/{newName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/group/{groupName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user/{userName}/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user/{userName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user/{userName}/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/user],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+{[/admin/user/{userName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user/password],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/admin/user/{userName}/exists],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+{[/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+{[/error],methods=[],params=[],headers=[],consumes=[],produces=[text/html],custom=[]}
+[/login]
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/tracebucket/idem">Idem</a> is maintained by <a href="https://github.com/tracebucket">tracebucket</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
