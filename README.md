@@ -53,3 +53,46 @@ and the necessary beans for Idem will be enabled.
     [{"uid":"12285c20-85eb-4d57-98f0-ae4d3b12d855","passive":false,"role":"IDEM_ADMINISTRATOR"}]
 
     $
+    
+Idem Endpoints
+
+    BasePath : http://localhost:40080/idem
+    
+    Endpoints : 
+    
+    {[/oauth/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+    {[/oauth/confirm_access],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+    {[/user],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+    {[/admin/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/authority/{uid}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/authority],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/authority/{uid}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/authorities],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/client/{clientId}/secret],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/client/{clientId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/client],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/client],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/clients],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/client/{clientId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]} {[/admin/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}/users],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{oldName}/{newName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/group/{groupName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user/{userName}/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user/{userName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user/{userName}/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/user],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
+    {[/admin/user/{userName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user/password],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/admin/user/{userName}/exists],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
+    {[/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
+    {[/error],methods=[],params=[],headers=[],consumes=[],produces=[text/html],custom=[]}
+    [/login]
+    [/oauth/confirm_access]
+    
