@@ -56,9 +56,9 @@ and the necessary beans for Idem will be enabled.
     
 <h5>Idem Endpoints</h5>
 
-    <h3>BasePath : http://localhost:40080/idem</h3>
+    BasePath : http://localhost:40080/idem
     
-    <h3>Endpoints : </h3>
+    Endpoints : 
     
     {[/oauth/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
     {[/oauth/confirm_access],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
