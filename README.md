@@ -167,7 +167,7 @@ and the necessary beans for Idem will be enabled.
     < Transfer-Encoding: chunked
     < Date: Wed, 03 Jun 2015 07:09:03 GMT
     <
-    {"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"TEMP_TEMP_2"}* Connection #0 to host localhost left intact
+    {"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}* Connection #0 to host localhost left intact
     
     $
 
