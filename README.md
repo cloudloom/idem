@@ -323,7 +323,7 @@ and the necessary beans for Idem will be enabled.
     
     $
     
-<h5>Get Client</h5>
+<h5>Get Client By Client Id</h5>
 
     $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/client/gateway"
     
@@ -511,7 +511,7 @@ and the necessary beans for Idem will be enabled.
     
     $
     
-<h5>Get Group</h5>
+<h5>Get Group By Name</h5>
 
     $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/group/Admin"
     
