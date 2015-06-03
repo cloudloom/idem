@@ -888,4 +888,41 @@ and the necessary beans for Idem will be enabled.
     true* Connection #0 to host localhost left intact
     
     $
+    
+<h5>Get User by Username</h5>
+
+    $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user"
+    
+    * Adding handle: conn: 0x873778
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x873778) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > GET /idem/admin/user/user HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 09:34:19 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[{"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}],"groups":[],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to host localhost left intact
+    
+    $
 
