@@ -32,7 +32,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     )
     private Set<Authority> authorities = new HashSet<Authority>(0);
 
-    @ManyToMany(mappedBy = "members")
+    @ManyToMany(mappedBy = "members", fetch = FetchType.EAGER)
     private Set<Group> groups = new HashSet<>(0);
 
     @Column(name = "ACCOUNT_NON_EXPIRED", columnDefinition = "boolean default false")

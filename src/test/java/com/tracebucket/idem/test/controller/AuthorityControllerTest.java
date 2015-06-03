@@ -76,6 +76,7 @@ public class AuthorityControllerTest {
         createAuthority();
         String role = "UPDATED_ROLE " + UUID.randomUUID();
         authority.setRole(role);
+        log.info("Update Authority : " + objectMapper.writeValueAsString(authority));
         ResponseEntity<AuthorityResource> responseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.PUT, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
         Assert.assertNotNull(responseEntity);
         Assert.assertNotNull(authority = responseEntity.getBody());

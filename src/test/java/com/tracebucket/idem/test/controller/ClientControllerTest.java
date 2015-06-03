@@ -78,12 +78,14 @@ public class ClientControllerTest {
         Assert.assertNotNull(client.getUid());
         client.getAuthorizedGrantTypes().clear();
         client.getScope().clear();
+        log.info("Update Client : " + objectMapper.writeValueAsString(client));
         ResponseEntity<ClientResource> responseEntity = restTemplate.exchange(basePath + "/admin/client", HttpMethod.PUT, RestRequestBuilder.build(client, accessToken), ClientResource.class);
         Assert.assertNotNull(responseEntity);
         Assert.assertNotNull(client = responseEntity.getBody());
         Assert.assertNotNull(client.getUid());
         Assert.assertEquals(0, client.getAuthorizedGrantTypes().size());
         Assert.assertEquals(0, client.getScope().size());
+        log.info("Updated Client : " + objectMapper.writeValueAsString(client));
     }
 
     @Test

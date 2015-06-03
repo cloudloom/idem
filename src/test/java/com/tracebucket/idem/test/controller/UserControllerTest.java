@@ -73,7 +73,6 @@ public class UserControllerTest {
         Assert.assertNotNull(responseEntity);
         Assert.assertNotNull(responseEntity.getBody());
         user = responseEntity.getBody();
-        log.info("Created Group : " + objectMapper.writeValueAsString(group));
         log.info("Created User : " + objectMapper.writeValueAsString(user));
 
         Assert.assertNotNull(user);
@@ -95,6 +94,9 @@ public class UserControllerTest {
         Assert.assertNotNull(authority = authorityResponseEntity.getBody());
 
         user.getAuthorities().add(authority);
+
+        log.info("Update User : " + objectMapper.writeValueAsString(user));
+
 
         ResponseEntity<UserResource> responseEntity = restTemplate.exchange(basePath + "/admin/user", HttpMethod.PUT, RestRequestBuilder.build(user, accessToken), UserResource.class);
 

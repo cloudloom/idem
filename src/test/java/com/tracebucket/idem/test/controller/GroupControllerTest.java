@@ -137,9 +137,11 @@ public class GroupControllerTest {
     public void testAddGroupAuthority() throws Exception {
         createGroup();
         authority = AuthorityResourceFixture.tempAuthority();
+        log.info("Create Authority : " + objectMapper.writeValueAsString(authority));
         ResponseEntity<AuthorityResource> authorityResponseEntity = restTemplate.exchange(basePath + "/admin/authority", HttpMethod.POST, RestRequestBuilder.build(authority, accessToken), AuthorityResource.class);
         Assert.assertNotNull(authorityResponseEntity);
         Assert.assertNotNull(authority = authorityResponseEntity.getBody());
+        log.info("Created Authority : " + objectMapper.writeValueAsString(authority));
         ResponseEntity<GroupResource> groupResponseEntity = restTemplate.exchange(basePath + "/admin/group/" + group.getName(), HttpMethod.PUT, RestRequestBuilder.build(authority, accessToken), GroupResource.class);
         Assert.assertNotNull(groupResponseEntity);
         Assert.assertNotNull(group = groupResponseEntity.getBody());
