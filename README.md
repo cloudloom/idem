@@ -773,3 +773,303 @@ and the necessary beans for Idem will be enabled.
     true* Connection #0 to host localhost left intact
     
     $
+    
+<h5>Create User</h5>
+
+    $curl -v -X POST -H "Content-Type: application/json" -d "{\"password\":\"password\",\"username\":\"user\",\"tenantInformation\":{\"TENANT_NAME\":\"TnT\",\"TENANT_ID\":\"12345\"}}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user"
+    
+    * Adding handle: conn: 0xa13978
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0xa13978) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > POST /idem/admin/user HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    > Content-Length: 103
+    >
+    * upload completely sent off: 103 out of 103 bytes
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 09:18:40 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[],"groups":[],"accountNonExpired":false,"accountNonLocked":false,"credentialsNonExpired":false,"enabled":false,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>Update User</h5>
+
+    $curl -v -X PUT -H "Content-Type: application/json" -d "{\"uid\":\"b3667811-42ea-4003-9576-464fd121fc32\",\"password\":\"password\",\"username\":\"user\",\"authorities\":[{\"uid\":\"33c4e199-b5b1-474c-bd66-baff658ecb96\",\"role\":\"ROLE_ADMIN\"}],\"groups\":[],\"accountNonExpired\":true,\"accountNonLocked\":true,\"credentialsNonExpired\":true,\"enabled\":true,\"tenantInformation\":{\"TENANT_NAME\":\"TnT\",\"TENANT_ID\":\"12345\"}}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user"
+    
+    * Adding handle: conn: 0xac3e30
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0xac3e30) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > PUT /idem/admin/user HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    > Content-Length: 336
+    >
+    * upload completely sent off: 336 out of 336 bytes
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 09:27:10 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[{"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}],"groups":[],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>User Exists</h5>
+
+    $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user/exists"
+    
+    * Adding handle: conn: 0x20637d0
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x20637d0) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > GET /idem/admin/user/user/exists HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 09:31:21 GMT
+    <
+    true* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>Get User by Username</h5>
+
+    $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user"
+    
+    * Adding handle: conn: 0x873778
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x873778) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > GET /idem/admin/user/user HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 09:34:19 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[{"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}],"groups":[],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>Add User To Group</h5>
+
+    $curl -v -X PUT -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user/group/Admin"
+    * Adding handle: conn: 0x20d3810
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x20d3810) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > PUT /idem/admin/user/user/group/Admin HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 10:45:37 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[{"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}],"groups":[{"uid":"9d3e41b7-ceda-46a0-8f18-8d5d10bebc78","name":"Admin","authorities":[],"members":[]}],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to hostlocalhost left intact
+    
+    $
+    
+<h5>Get Users In Group</h5>
+
+    $curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/group/Admin/users"
+    
+    * Adding handle: conn: 0x1ff37d0
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x1ff37d0) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > GET /idem/admin/group/Admin/users HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 10:49:15 GMT
+    <
+    ["user"]* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>Remove User From Group</h5>
+
+    $curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user/group/Admin"
+    
+    * Adding handle: conn: 0x2073800
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x2073800) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > DELETE /idem/admin/user/user/group/Admin HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 10:52:17 GMT
+    <
+    {"uid":"b3667811-42ea-4003-9576-464fd121fc32","password":"password","username":"user","authorities":[{"uid":"33c4e199-b5b1-474c-bd66-baff658ecb96","role":"ROLE_ADMIN"}],"groups":[],"accountNonExpired":true,"accountNonLocked":true,"credentialsNonExpired":true,"enabled":true,"tenantInformation":{"TENANT_NAME":"TnT","TENANT_ID":"12345"}}* Connection #0 to host localhost left intact
+    
+    $
+    
+<h5>Delete User</h5>
+
+    $curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/user/user
+    
+    * Adding handle: conn: 0x1fc3790
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x1fc3790) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > DELETE /idem/admin/user/user HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 10:55:40 GMT
+    <
+    true* Connection #0 to host localhost left intact
+    
+    $
+
