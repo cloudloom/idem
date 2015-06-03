@@ -210,7 +210,7 @@ and the necessary beans for Idem will be enabled.
 
 <h5>Delete Authority</h5>
 
-    $curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/040829c3-6140-4ab9-812c-371089a8675a"
+    $curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/33c4e199-b5b1-474c-bd66-baff658ecb96"
     
     * Adding handle: conn: 0x2143910
     * Adding handle: send: 0
