@@ -210,6 +210,37 @@ and the necessary beans for Idem will be enabled.
 
 <h5>Delete Authority</h5>
 
-    curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/7a1ce2ee-b678-4183-99c5-08009c5ec89b"
-
-    true or false  or DataIntegrityViolationException
+    $curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/040829c3-6140-4ab9-812c-371089a8675a"
+    
+    * Adding handle: conn: 0x2143910
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0x2143910) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > DELETE /idem/admin/authority/33c4e199-b5b1-474c-bd66-baff658ecb96 HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    >
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 07:31:23 GMT
+    <
+    true* Connection #0 to host localhost left intact
+    
+    $
