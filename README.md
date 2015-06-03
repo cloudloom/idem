@@ -56,42 +56,32 @@ and the necessary beans for Idem will be enabled.
     
 <h5>Endpoints</h5>
 
-    BasePath : http://localhost:40080/idem
-    
-    Endpoints : 
-    
-    {[/oauth/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
-    {[/oauth/confirm_access],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
-    {[/user],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
-    {[/admin/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/authority/{uid}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/authority],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/authority/{uid}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/authorities],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/client/{clientId}/secret],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/client/{clientId}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/client],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/client],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/clients],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/client/{clientId}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}/authorities],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}/authority],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]} 
-    {[/admin/groups],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}/users],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group/{oldName}/{newName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/group/{groupName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user/{userName}/group/{groupName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user/{userName}],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user/{userName}/group/{groupName}],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user],methods=[POST],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/user],methods=[PUT],params=[],headers=[],consumes=[application/json],produces=[application/json],custom=[]}
-    {[/admin/user/{userName}],methods=[DELETE],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user/password],methods=[PUT],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/admin/user/{userName}/exists],methods=[GET],params=[],headers=[],consumes=[],produces=[application/json],custom=[]}
-    {[/error],methods=[],params=[],headers=[],consumes=[],produces=[],custom=[]}
-    {[/error],methods=[],params=[],headers=[],consumes=[],produces=[text/html],custom=[]}
-    [/login]
+<h5>Create Authority</h5>
+
+    curl -v -X POST -H "Content-Type: application/json" -d "{\"role\":\"ROLE_USER\"}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority"
+
+    {"uid":"7a1ce2ee-b678-4183-99c5-08009c5ec89b", "role":"ROLE_USER"} 
+
+<h5>Update Authority</h5>
+
+    curl -v -X PUT -H "Content-Type: application/json" -d "{\"uid\":\"7a1ce2ee-b678-4183-99c5-08009c5ec89b\", \"role\":\"ROLE_ADMIN\"}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority"
+
+    {"uid":"7a1ce2ee-b678-4183-99c5-08009c5ec89b", "role":"ROLE_ADMIN"} 
+
+<h5>Get Authority</h5>
+
+    curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/7a1ce2ee-b678-4183-99c5-08009c5ec89b"
+
+    {"uid":"7a1ce2ee-b678-4183-99c5-08009c5ec89b", "role":"ROLE_ADMIN"}
+
+<h5>Get Authorities</h5>
+
+    curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authorities"
+
+    [{"uid":"7a1ce2ee-b678-4183-99c5-08009c5ec89b", "role":"ROLE_ADMIN"}]
+
+<h5>Delete Authority</h5>
+
+    curl -v -X DELETE -H "Content-Type: application/json" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/authority/7a1ce2ee-b678-4183-99c5-08009c5ec89b"
+
+    true or false  or DataIntegrityViolationException
