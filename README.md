@@ -622,7 +622,7 @@ and the necessary beans for Idem will be enabled.
     
     $
     
-<h5>Add Group Authority
+<h5>Add Group Authority</h5>
 
     $curl -v -X PUT -H "Content-Type: application/json" -d "{\"uid\":\"33c4e199-b5b1-474c-bd66-baff658ecb96\",\"role\":\"ROLE_ADMIN\"}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/group/User"
     
