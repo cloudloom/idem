@@ -244,3 +244,42 @@ and the necessary beans for Idem will be enabled.
     true* Connection #0 to host localhost left intact
     
     $
+
+<h5>Create Client</h5>
+
+    $curl -v -X POST -H "Content-Type: application/json" -d "{\"clientId\":\"gateway\",\"clientSecret\":\"gateway-secret\",\"scope\":[\"read\",\"write\"],\"resourceIds\":[],\"authorizedGrantTypes\":[\"authorization_code\",\"refresh_token\",\"password\"],\"authorities\":[{\"role\":\"GATEWAY_USER\"}],\"additionalInformation\":{}}" -H "Authorization: Bearer example_access_token" "http://localhost:40080/idem/admin/client"
+    
+    * Adding handle: conn: 0xb03c78
+    * Adding handle: send: 0
+    * Adding handle: recv: 0
+    * Curl_addHandleToPipeline: length: 1
+    * - Conn 0 (0xb03c78) send_pipe: 1, recv_pipe: 0
+    * About to connect() to localhost port 40080 (#0)
+    *   Trying 127.0.0.1...
+    * Connected to localhost (127.0.0.1) port 40080 (#0)
+    > POST /idem/admin/client HTTP/1.1
+    > User-Agent: curl/7.30.0
+    > Host: localhost:40080
+    > Accept: */*
+    > Content-Type: application/json
+    > Authorization: Bearer example_access_token
+    > Content-Length: 236
+    >
+    * upload completely sent off: 236 out of 236 bytes
+    < HTTP/1.1 200 OK
+    * Server Apache-Coyote/1.1 is not blacklisted
+    < Server: Apache-Coyote/1.1
+    < X-Content-Type-Options: nosniff
+    < X-XSS-Protection: 1; mode=block
+    < Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+    < Pragma: no-cache
+    < Expires: 0
+    < X-Frame-Options: DENY
+    < X-Application-Context: application:40080
+    < Content-Type: application/json;charset=UTF-8
+    < Transfer-Encoding: chunked
+    < Date: Wed, 03 Jun 2015 07:38:55 GMT
+    <
+    {"uid":"064033ec-01e5-4c94-9e66-d6bf0b43046a","clientId":"gateway","clientSecret":"gateway-secret","scope":["write","read"],"resourceIds":[],"authorizedGrantTypes":["refresh_token","password","authorization_code"],"registeredRedirectUris":[],"autoApproveScopes":[],"authorities":[{"uid":"4f8895cd-93ca-4ce8-b872-bd74188444fd","role":"GATEWAY_USER"}],"additionalInformation":{}}* Connection #0 to host localhost left intact
+    
+    $
