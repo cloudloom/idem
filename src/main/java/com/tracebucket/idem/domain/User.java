@@ -51,7 +51,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @Basic(fetch = FetchType.EAGER)
     private boolean enabled;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "MESSAGE")
     @Column(name = "TENANT_INFO", nullable = true)
     @CollectionTable(name = "USER_TENANT_INFORMATION", joinColumns = @JoinColumn(name = "USER__ID"))

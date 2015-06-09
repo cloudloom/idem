@@ -1,5 +1,6 @@
-package com.tracebucket.idem.config;
+package com.tracebucket.idem.autoconfig;
 
+import com.tracebucket.tron.autoconfig.NonExistingJpaBeans;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -24,6 +26,7 @@ import java.beans.PropertyVetoException;
  * @since 12-03-2015
  */
 @Configuration
+@Conditional(value = NonExistingJpaBeans.class)
 @EnableJpaRepositories(basePackages = "com.tracebucket.idem.repository.jpa")
 @EntityScan(basePackages = "com.tracebucket.idem.domain")
 @PropertySource(value = "classpath:jpa-default.properties")
