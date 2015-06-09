@@ -35,9 +35,6 @@ public class InitialConfiguration implements ApplicationListener<ContextRefreshe
     @Autowired
     private ClientRepository clientRepository;
 
-    @Autowired
-    private UserDetailsManagerImpl userDetailsManager;
-
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         Authority idemAdministrator = authorityRepository.findByRole("IDEM_ADMINISTRATOR");
