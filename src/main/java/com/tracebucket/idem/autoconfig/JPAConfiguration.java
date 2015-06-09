@@ -29,7 +29,7 @@ import java.beans.PropertyVetoException;
 @Conditional(value = NonExistingJpaBeans.class)
 @EnableJpaRepositories(basePackages = "com.tracebucket.idem.repository.jpa")
 @EntityScan(basePackages = "com.tracebucket.idem.domain")
-@PropertySource(value = "classpath:jpa-default.properties")
+@PropertySource(value = "classpath:jpa.properties")
 @EnableTransactionManagement(proxyTargetClass = true)
 public class JPAConfiguration {
     private static final Logger log = LoggerFactory.getLogger(JPAConfiguration.class);
