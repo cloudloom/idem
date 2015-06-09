@@ -2,7 +2,7 @@
 ### Java template
 *.class
 
-*/target/*
+/target/*
 .idea/
 
 # Package Files #
