@@ -28,7 +28,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @JoinTable(
             name="USER_AUTHORITY",
             joinColumns={ @JoinColumn(name="USER__ID", referencedColumnName="ID") },
-            inverseJoinColumns={ @JoinColumn(name="AUTHORITY__ID", referencedColumnName="ID", unique=true) }
+            inverseJoinColumns={ @JoinColumn(name="AUTHORITY__ID", referencedColumnName="ID"/*, unique=true*/) }
     )
     private Set<Authority> authorities = new HashSet<Authority>(0);
 
