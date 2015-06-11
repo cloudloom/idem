@@ -1,4 +1,4 @@
-package com.tracebucket.idem.config;
+package com.tracebucket.idem.autoconfig;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Client;
@@ -10,8 +10,11 @@ import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import com.tracebucket.idem.repository.jpa.ClientRepository;
 import com.tracebucket.idem.repository.jpa.UserRepository;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
+import com.tracebucket.tron.autoconfig.NonExistingAssemblerBeans;
+import com.tracebucket.tron.autoconfig.NonExistingInitialConfigurationBeans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 
@@ -24,6 +27,7 @@ import java.util.Set;
  * Created by sadath on 30-Apr-15.
  */
 @Configuration
+@Conditional(value = NonExistingInitialConfigurationBeans.class)
 public class InitialConfiguration implements ApplicationListener<ContextRefreshedEvent> {
 
     @Autowired
