@@ -27,12 +27,16 @@
                         <th  width="90%">Scope</th>
                     </tr>
                     <#list authorizationRequest.scope as authScope>
-                    <tr>
-                        <#assign scopekey = "scope."+authScope>
-                        <td><input type="radio" name="${scopekey}" value="true" checked></td>
-                        <td><input type="radio" name="${scopekey}" value="false"></td>
-                        <td>${authScope}</td>
-                    </tr>
+                        <#list userScopes as userScope>
+                        <#if userScope == authScope>
+                            <tr>
+                                <#assign scopekey = "scope."+authScope>
+                                <td><input type="radio" name="${scopekey}" value="true" checked></td>
+                                <td><input type="radio" name="${scopekey}" value="false"></td>
+                                <td>${authScope}</td>
+                            </tr>
+                        </#if>
+                        </#list>
                     </#list>
                 </table>
                 <input type="hidden" id="csrf_token" name="${_csrf.parameterName}" value="${_csrf.token}"/>

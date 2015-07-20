@@ -1,7 +1,10 @@
 package com.tracebucket.idem.web;
 
+import com.tracebucket.idem.domain.Authority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.common.util.OAuth2Utils;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -15,8 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author ffl
@@ -53,6 +55,23 @@ public class AccessConfirmationController {
             model.put("_csrf", request.getAttribute("_csrf"));
         }*/
         model.put("scopes", scopes);
+        Set<String> userScopes = new HashSet<String>();
+        UsernamePasswordAuthenticationToken user = (UsernamePasswordAuthenticationToken) principal;
+        Collection<GrantedAuthority> grantedAuthorities = user.getAuthorities();
+        if(grantedAuthorities != null && grantedAuthorities.size() > 0) {
+            grantedAuthorities.stream().forEach(grantedAuthority -> {
+                Authority authority = (Authority)grantedAuthority;
+                if(authority.getScopes() != null) {
+                    Set<String> scopeStr = authority.getScopes();
+                    if(scopeStr != null && scopeStr.size() > 0) {
+                        for(String str : scopeStr) {
+                            userScopes.add(str);
+                        }
+                    }
+                }
+            });
+        }
+        model.put("userScopes", userScopes);
         return new ModelAndView("authorize", model);
     }
     @RequestMapping("/oauth/error")
