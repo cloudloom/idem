@@ -5,6 +5,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author FFL
@@ -17,6 +19,10 @@ public class Authority extends BaseEntity implements GrantedAuthority{
     @Column(name = "ROLE", unique = true, nullable = false)
     @Basic(fetch = FetchType.EAGER)
     private String role;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "AUTHORITY_SCOPE", joinColumns = @JoinColumn(name = "AUTHORITY__ID"))
+    private Set<String> scopes = new HashSet<String>(0);
 
     public Authority() {   }
 
@@ -56,5 +62,13 @@ public class Authority extends BaseEntity implements GrantedAuthority{
 
     public String toString() {
         return this.role;
+    }
+
+    public Set<String> getScopes() {
+        return scopes;
+    }
+
+    public void setScopes(Set<String> scopes) {
+        this.scopes = scopes;
     }
 }
