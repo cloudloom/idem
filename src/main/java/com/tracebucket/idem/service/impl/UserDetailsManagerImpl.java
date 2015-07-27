@@ -172,21 +172,6 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
     @Override
     public void createUser(UserDetails user) {
         validateUserDetails(user);
-        if(((User)user).getRawAuthorities() != null && ((User)user).getRawAuthorities().size() > 0) {
-            Set<Authority> authorities = ((User)user).getRawAuthorities();
-            if(authorities != null && authorities.size() > 0) {
-                List<String> authStr= new ArrayList<>();
-                authorities.stream().forEach(authority -> {
-                    authStr.add(authority.getRole());
-                });
-                if(authStr.size() > 0) {
-                    List<Authority> authoritiesList = authorityRepository.findByRoleIn(authStr);
-                    if(authoritiesList != null && authoritiesList.size() > 0) {
-                        ((User) user).setAuthorities(authoritiesList);
-                    }
-                }
-            }
-        }
         userRepository.save((User)user);
         if (getEnableAuthorities()) {
             insertUserAuthorities(user);
