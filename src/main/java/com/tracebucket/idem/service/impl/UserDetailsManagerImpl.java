@@ -178,6 +178,18 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         }
     }
 
+    public void createUsers(Set<User> users) {
+        if(users != null && users.size() >0) {
+            users.stream().forEach(user -> {
+                validateUserDetails(user);
+                userRepository.save((User) user);
+                if (getEnableAuthorities()) {
+                    insertUserAuthorities(user);
+                }
+            });
+        }
+    }
+
     @Override
     public void updateUser(UserDetails user) {
         validateUserDetails(user);

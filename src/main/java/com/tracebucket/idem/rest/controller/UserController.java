@@ -10,6 +10,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by sadath on 29-Apr-15.
  */
@@ -32,6 +36,25 @@ public class UserController {
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<UserResource>> createUsers(@RequestBody List<UserResource> userResource) {
+        Set<User> users = assemblerResolver.resolveEntityAssembler(User.class, UserResource.class).toEntities(userResource, User.class);
+        if(users != null && users.size() > 0) {
+            userDetailsManagerImpl.createUsers(users);
+            List<User> loadedUsers = new ArrayList<>();
+            users.stream().forEach(user -> {
+                loadedUsers.add((User)userDetailsManagerImpl.loadUserByUsername(user.getUsername()));
+            });
+            if (loadedUsers != null && loadedUsers.size() > 0) {
+                Set<UserResource> userResourceSet = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(loadedUsers, UserResource.class);
+                return new ResponseEntity<Set<UserResource>>(userResourceSet, HttpStatus.OK);
+            } else {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
