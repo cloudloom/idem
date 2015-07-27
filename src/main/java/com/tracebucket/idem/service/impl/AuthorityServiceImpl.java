@@ -31,6 +31,14 @@ public class AuthorityServiceImpl {
         return authorityRepository.findOne(new EntityId(uid));
     }
 
+    public Authority findByRole(String role) {
+        return authorityRepository.findByRole(role);
+    }
+
+    public List<Authority> findByRoleIn(List<String> roles) {
+        return authorityRepository.findByRoleIn(roles);
+    }
+
     public List<Authority> findAll() {
         return authorityRepository.findAll();
     }
