@@ -10,9 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by sadath on 13-May-15.
@@ -67,6 +65,19 @@ public class AuthorityController {
             return new ResponseEntity<Set<AuthorityResource>>(authorityResources, HttpStatus.OK);
         }
         return new ResponseEntity<Set<AuthorityResource>>(Collections.emptySet(), HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/authorities/list", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<String>> findAllAuthorities() {
+        List<Authority> authorities = authorityServiceImpl.findAll();
+        if(authorities != null && authorities.size() > 0) {
+            final Set<String> set = new HashSet<String>();
+            authorities.stream().forEach(authority -> {
+                set.add(authority.getRole());
+            });
+            return new ResponseEntity<Set<String>>(set, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(value = "/authority/{uid}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
