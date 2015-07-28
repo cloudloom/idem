@@ -182,9 +182,24 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         if(users != null && users.size() >0) {
             users.stream().forEach(user -> {
                 validateUserDetails(user);
+                Set<Authority> newAuthorities = new HashSet<Authority>();
+                if(user.getRawAuthorities() != null) {
+                    Set<Authority> authorities = user.getRawAuthorities();
+                    authorities.stream().forEach(authority -> {
+                        Authority authority1 = new Authority();
+                        authority1.setRole(authority.getRole());
+                        authority1.setScopes(authority.getScopes());
+                        authority1.setEntityId(null);
+                        newAuthorities.add(authority1);
+                    });
+                }
+                user.setAuthorities(new HashSet<Authority>(0));
                 userRepository.save((User) user);
                 if (getEnableAuthorities()) {
-                    insertUserAuthorities(user);
+                    if(newAuthorities.size() > 0) {
+                        user.setAuthorities(newAuthorities);
+                        insertUserAuthorities(user);
+                    }
                 }
             });
         }
