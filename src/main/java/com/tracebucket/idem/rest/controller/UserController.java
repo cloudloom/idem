@@ -10,9 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by sadath on 29-Apr-15.
@@ -124,12 +122,24 @@ public class UserController {
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<UserResource>> getUsers() {
+    @RequestMapping(value = "/users/authorities/minimal", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Map<String, String>>> getUsers() {
         List<User> users = userDetailsManagerImpl.findAll();
         if (users != null && users.size() > 0) {
-            Set<UserResource> userResourceSet = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(users, UserResource.class);
-                return new ResponseEntity<Set<UserResource>>(userResourceSet, HttpStatus.OK);
+            List<Map<String, String>> userResources = new ArrayList<Map<String, String>>();
+            users.stream().forEach(user -> {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("username" , user.getUsername());
+                final List<String> authorities = new ArrayList<String>();
+                if(user.getRawAuthorities() != null && user.getRawAuthorities().size() > 0) {
+                    user.getRawAuthorities().stream().forEach(authority -> {
+                        authorities.add(authority.getRole());
+                    });
+                }
+                map.put("authorities", authorities.toString());
+                userResources.add(map);
+            });
+            return new ResponseEntity<List<Map<String, String>>>(userResources, HttpStatus.OK);
         } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
