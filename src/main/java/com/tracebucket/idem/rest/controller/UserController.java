@@ -123,4 +123,15 @@ public class UserController {
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
     }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<UserResource>> getUsers() {
+        List<User> users = userDetailsManagerImpl.findAll();
+        if (users != null && users.size() > 0) {
+            Set<UserResource> userResourceSet = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(users, UserResource.class);
+                return new ResponseEntity<Set<UserResource>>(userResourceSet, HttpStatus.OK);
+        } else {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 }

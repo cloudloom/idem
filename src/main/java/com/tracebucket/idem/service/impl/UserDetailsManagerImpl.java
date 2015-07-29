@@ -339,5 +339,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
                 true, true, true, combinedAuthorities);
     }
 
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
 
 }
