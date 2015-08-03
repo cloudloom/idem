@@ -3,6 +3,8 @@ package com.tracebucket.idem.test.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.IdemStarter;
 import com.tracebucket.idem.domain.User;
+import com.tracebucket.idem.repository.jpa.AccessTokenRepository;
+import com.tracebucket.idem.repository.jpa.ApprovalRepository;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.UserResource;
@@ -60,6 +62,12 @@ public class UserControllerTest {
 
     private AuthorityResource authority = null;
 
+/*    @Autowired
+    private AccessTokenRepository accessTokenRepository;
+
+    @Autowired
+    private ApprovalRepository approvalRepository;*/
+
     @Before
     public void setUp() {
         accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
@@ -106,7 +114,7 @@ public class UserControllerTest {
         Assert.assertEquals(1, user.getAuthorities().size());
     }
 
-/*    @Test
+    @Test
     public void testChangePassword() throws Exception {
         createUser();
         accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", user.getUsername(), user.getPassword());
@@ -115,7 +123,7 @@ public class UserControllerTest {
         Assert.assertNotNull(responseEntity);
         Assert.assertNotNull(user = responseEntity.getBody());
         Assert.assertEquals(newPassword, user.getPassword());
-    }*/
+    }
 
     @Test
     public void testUserExists() throws Exception {
@@ -175,7 +183,7 @@ public class UserControllerTest {
 
     @After
     public void tearDown() throws Exception{
-        if(user != null && user.getUid() != null) {
+/*        if(user != null && user.getUid() != null) {
             ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/user/" + user.getUsername(), HttpMethod.DELETE, RestRequestBuilder.build(accessToken), Boolean.class);
             Assert.assertNotNull(responseEntity);
             Assert.assertTrue(responseEntity.getBody());
@@ -204,6 +212,6 @@ public class UserControllerTest {
             } catch (HttpClientErrorException httpClientErrorException) {
                 Assert.assertEquals(HttpStatus.NOT_FOUND, httpClientErrorException.getStatusCode());
             }
-        }
+        }*/
     }
 }

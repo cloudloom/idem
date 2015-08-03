@@ -4,6 +4,7 @@ import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
 import com.tracebucket.tron.assembler.AssemblerResolver;
+import com.tracebucket.tron.rest.exception.X1Exception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ public class UserController {
         user = (User)userDetailsManagerImpl.loadUserByUsername(user.getUsername());
         if(user != null) {
             userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+            userResource.setPassword(null);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
@@ -47,6 +49,9 @@ public class UserController {
             });
             if (loadedUsers != null && loadedUsers.size() > 0) {
                 Set<UserResource> userResourceSet = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(loadedUsers, UserResource.class);
+                if(userResourceSet != null && userResourceSet.size() > 0) {
+                    userResourceSet.stream().forEach(entry -> {entry.setPassword(null);});
+                }
                 return new ResponseEntity<Set<UserResource>>(userResourceSet, HttpStatus.OK);
             } else {
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -62,6 +67,7 @@ public class UserController {
         user = (User)userDetailsManagerImpl.loadUserByUsername(user.getUsername());
         if(user != null) {
             userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+            userResource.setPassword(null);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
@@ -69,13 +75,34 @@ public class UserController {
 
     @RequestMapping(value = "/user/password", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResource> changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
-        userDetailsManagerImpl.changePassword(oldPassword, newPassword);
-        User user = (User)userDetailsManagerImpl.getCurrentUser();
-        if(user != null) {
-            UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
-            return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
+        try {
+            userDetailsManagerImpl.changePassword(oldPassword, newPassword);
+            User user = (User) userDetailsManagerImpl.getCurrentUser();
+            if (user != null) {
+                UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+                userResource.setPassword(null);
+                return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
+            }
+        } catch (X1Exception x1e) {
+            throw new X1Exception(x1e.getMessage(), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @RequestMapping(value = "/user/password/reset", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> resetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword) {
+        try {
+            userDetailsManagerImpl.resetPassword(userName, newPassword);
+            User user = (User) userDetailsManagerImpl.loadUserByUsername(userName);
+            if (user != null) {
+                if(user.getPassword() != null && user.getPassword().equals(newPassword)) {
+                    return new ResponseEntity(true, HttpStatus.OK);
+                }
+            }
+        } catch (X1Exception x1e) {
+            throw new X1Exception(x1e.getMessage(), HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity(HttpStatus.NOT_MODIFIED);
     }
 
     @RequestMapping(value = "/user/{userName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -95,6 +122,7 @@ public class UserController {
         User user = (User)userDetailsManagerImpl.loadUserByUsername(userName);
         if(user != null) {
             UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+            userResource.setPassword(null);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
@@ -106,6 +134,7 @@ public class UserController {
         User user = (User)userDetailsManagerImpl.loadUserByUsername(userName);
         if(user != null) {
             UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+            userResource.setPassword(null);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
@@ -117,6 +146,7 @@ public class UserController {
         User user = (User)userDetailsManagerImpl.loadUserByUsername(userName);
         if(user != null) {
             UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
+            userResource.setPassword(null);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
         }
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
