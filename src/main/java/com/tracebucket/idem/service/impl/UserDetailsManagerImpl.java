@@ -6,9 +6,11 @@ import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import com.tracebucket.idem.repository.jpa.GroupRepository;
 import com.tracebucket.idem.repository.jpa.UserRepository;
+import com.tracebucket.tron.rest.exception.X1Exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -274,7 +276,10 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         if (authenticationManager != null) {
             logger.debug("Reauthenticating user '"+ username + "' for password change request.");
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+            currentUser = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+            if(!currentUser.isAuthenticated()) {
+                throw new X1Exception("Authentication Failed. Old Password Entered Is Not Found In Records", HttpStatus.CONFLICT);
+            }
         } else {
             logger.debug("No authentication manager set. Password won't be re-checked.");
         }
@@ -289,6 +294,16 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(currentUser, newPassword));
 
         userCache.removeUserFromCache(username);
+    }
+
+    public void resetPassword(String userName, String newPassword) {
+        UserDetails user = loadUserByUsername(userName);
+        if(user != null && user.getUsername().equals(userName)) {
+            userRepository.updatePassword(newPassword, userName);
+            userCache.removeUserFromCache(userName);
+        } else if(user == null) {
+            throw new X1Exception("User '" +userName+ "' Not Found", HttpStatus.NOT_FOUND);
+        }
     }
 
     public UserDetails getCurrentUser() {

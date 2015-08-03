@@ -119,10 +119,23 @@ public class UserControllerTest {
         createUser();
         accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", user.getUsername(), user.getPassword());
         String newPassword = UUID.randomUUID().toString();
-        ResponseEntity<UserResource> responseEntity = restTemplate.exchange(basePath + "/admin/user/password?oldPassword="+user.getPassword()+"&newPassword="+newPassword,HttpMethod.PUT, RestRequestBuilder.build(accessToken), UserResource.class);
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/user/password?oldPassword="+user.getPassword()+"&newPassword="+newPassword,HttpMethod.PUT, RestRequestBuilder.build(accessToken), Boolean.class);
         Assert.assertNotNull(responseEntity);
-        Assert.assertNotNull(user = responseEntity.getBody());
-        Assert.assertEquals(newPassword, user.getPassword());
+        Assert.assertTrue(responseEntity.getBody());
+    }
+
+    @Test
+    public void testResetPassword() throws Exception {
+        createUser();
+        accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", user.getUsername(), user.getPassword());
+        String newPassword = UUID.randomUUID().toString();
+        ResponseEntity<Boolean> responseEntity = restTemplate.exchange(basePath + "/admin/user/password?oldPassword="+user.getPassword()+"&newPassword="+newPassword,HttpMethod.PUT, RestRequestBuilder.build(accessToken), Boolean.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertTrue(responseEntity.getBody());
+        newPassword = UUID.randomUUID().toString();
+        responseEntity = restTemplate.exchange(basePath + "/admin/user/password/reset?userName="+user.getUsername()+"&newPassword="+newPassword,HttpMethod.PUT, RestRequestBuilder.build(accessToken), Boolean.class);
+        Assert.assertNotNull(responseEntity);
+        Assert.assertTrue(responseEntity.getBody());
     }
 
     @Test
