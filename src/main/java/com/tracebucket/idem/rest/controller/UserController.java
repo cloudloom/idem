@@ -4,6 +4,7 @@ import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
 import com.tracebucket.tron.assembler.AssemblerResolver;
+import com.tracebucket.tron.rest.exception.X1Exception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -68,14 +69,27 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/password", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserResource> changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<Boolean> changePassword(@RequestParam("oldPassword") String oldPassword, @RequestParam("newPassword") String newPassword) {
         userDetailsManagerImpl.changePassword(oldPassword, newPassword);
         User user = (User)userDetailsManagerImpl.getCurrentUser();
         if(user != null) {
-            UserResource userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
-            return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);
+            if(user.getPassword().equals(newPassword)) {
+                return new ResponseEntity(true, HttpStatus.OK);
+            }
         }
-        return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+    }
+
+    @RequestMapping(value = "/user/password/reset", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> resetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword) {
+        userDetailsManagerImpl.resetPassword(userName, newPassword);
+        User user = (User) userDetailsManagerImpl.loadUserByUsername(userName);
+        if (user != null) {
+            if(user.getPassword() != null && user.getPassword().equals(newPassword)) {
+                return new ResponseEntity(true, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_MODIFIED);
     }
 
     @RequestMapping(value = "/user/{userName}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
