@@ -34,18 +34,26 @@ public class TenantServiceImpl{
         return tenantRepository.findByName(name);
     }
 
-    public boolean deleteByName(Tenant tenant) {
-        tenantRepository.deleteByName(tenant.getName());
-        return tenantRepository.findByName(tenant.getName()) != null ? false : true;
+    public boolean deleteByName(String tenantName) {
+        Tenant tenant = findByName(tenantName);
+        if(tenant != null) {
+            tenantRepository.deleteByName(tenant.getName());
+            return tenantRepository.findByName(tenant.getName()) != null ? false : true;
+        }
+        return false;
     }
 
     public boolean delete(String uid) {
-        tenantRepository.delete(new EntityId(uid));
-        return tenantRepository.findOne(new EntityId(uid)) == null ? true : false;
+        Tenant tenant = findOne(uid);
+        if(tenant != null) {
+            tenantRepository.delete(tenant);
+            return tenantRepository.findOne(new EntityId(uid)) == null ? true : false;
+        }
+        return false;
     }
 
     public boolean deleteAll() {
         tenantRepository.deleteAll();
-        return tenantRepository.findAll().size() == 0 ? true : false;
+        return tenantRepository.findAll() != null && tenantRepository.findAll().size() == 0 ? true : false;
     }
 }

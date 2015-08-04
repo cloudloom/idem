@@ -14,7 +14,7 @@ public class TenantFixture {
         Tenant tenant = TenantBuilder.aTenantBuilder()
                 .withDescription("Description")
                 .withLogo("Logo")
-                .withUrl("www.mmp.nl")
+                .withUrl("www"+UUID.randomUUID().toString())
                 .withName(UUID.randomUUID().toString())
                 .build();
         return tenant;

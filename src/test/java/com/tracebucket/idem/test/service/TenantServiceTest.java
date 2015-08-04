@@ -82,7 +82,7 @@ public class TenantServiceTest {
     @Rollback(value = false)
     public void testDeleteByName() {
         createTenant();
-        tenantServiceImpl.deleteByName(tenant);
+        tenantServiceImpl.deleteByName(tenant.getName());
         tenant = tenantServiceImpl.findByName(tenant.getName());
         Assert.assertNull(tenant);
     }

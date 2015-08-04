@@ -32,6 +32,7 @@ public class TenantResourceAssembler extends ResourceAssembler<TenantResource, T
                 tenant.setDescription(entity.getDescription());
                 tenant.setLogo(entity.getLogo());
                 tenant.setName(entity.getName());
+                tenant.setUrl(entity.getUrl());
             }
         } catch (InstantiationException ie) {
 

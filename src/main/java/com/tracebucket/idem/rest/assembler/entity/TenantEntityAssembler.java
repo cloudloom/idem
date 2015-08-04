@@ -35,6 +35,7 @@ public class TenantEntityAssembler extends EntityAssembler<Tenant, TenantResourc
             tenant.setDescription(resource.getDescription());
             tenant.setLogo(resource.getLogo());
             tenant.setName(resource.getName());
+            tenant.setUrl(resource.getUrl());
         }
         return tenant;
     }
