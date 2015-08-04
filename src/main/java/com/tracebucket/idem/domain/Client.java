@@ -67,6 +67,10 @@ public class Client extends BaseEntity implements ClientDetails{
     @CollectionTable(name = "CLIENT_ADDITIONAL_INFORMATION", joinColumns = @JoinColumn(name = "CLIENT__ID"))
     private Map<String, String> additionalInformation = new LinkedHashMap<String, String>();
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "TENANT__ID")
+    private Tenant tenant;
+
     public Client() {
     }
 
@@ -275,6 +279,14 @@ public class Client extends BaseEntity implements ClientDetails{
     @Override
     public Map<String, Object> getAdditionalInformation() {
         return Collections.unmodifiableMap(this.additionalInformation);
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     }
 
     public void addAdditionalInformation(String key, String value) {
