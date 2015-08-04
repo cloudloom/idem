@@ -16,7 +16,7 @@ public class UserResource extends BaseResource {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
-    private Map<String, String> tenantInformation = new LinkedHashMap<String, String>();
+    private Set<TenantResource> tenantInformation = new HashSet<TenantResource>();
 
     public String getPassword() {
         return password;
@@ -82,11 +82,11 @@ public class UserResource extends BaseResource {
         this.enabled = enabled;
     }
 
-    public Map<String, String> getTenantInformation() {
+    public Set<TenantResource> getTenantInformation() {
         return tenantInformation;
     }
 
-    public void setTenantInformation(Map<String, String> tenantInformation) {
+    public void setTenantInformation(Set<TenantResource> tenantInformation) {
         this.tenantInformation = tenantInformation;
     }
 }

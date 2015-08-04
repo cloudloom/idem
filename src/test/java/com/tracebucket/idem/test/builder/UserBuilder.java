@@ -2,6 +2,7 @@ package com.tracebucket.idem.test.builder;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Group;
+import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.domain.User;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class UserBuilder {
     private boolean credentialsNonExpired;
     private boolean enabled;
     private Set<Group> groups = new HashSet<>(0);
-    private Map<String, String> tenantInformation = new LinkedHashMap<String, String>();
+    private Set<Tenant> tenantInformation = new HashSet<Tenant>(0);
 
     private UserBuilder() {}
 
@@ -67,7 +68,7 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder withTenantInformation(Map<String, String> tenantInformation) {
+    public UserBuilder withTenantInformation(Set<Tenant> tenantInformation) {
         this.tenantInformation = tenantInformation;
         return this;
     }

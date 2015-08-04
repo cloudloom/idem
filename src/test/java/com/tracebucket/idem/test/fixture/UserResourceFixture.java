@@ -15,9 +15,6 @@ public class UserResourceFixture {
     public static UserResource standardUser() {
 /*        Set<Authority> authorities = new HashSet<Authority>();
         authorities.add(AuthorityFixture.userAuthority());*/
-        Map<String, String> tenantInformation = new HashMap<String, String>();
-        tenantInformation.put("TENANT_ID", "12345");
-        tenantInformation.put("TENANT_NAME", "TnT");
         UserResource user = UserResourceBuilder.anUserBuilder()
                 //.withUsername("user")
                 .withUsername(UUID.randomUUID().toString())
@@ -26,8 +23,6 @@ public class UserResourceFixture {
                 .withAccountNonLocked(true)
                 .withCredentialsNonExpired(true)
                 .withEnabled(true)
-                        .withTenantInformation(tenantInformation)
-                        //.withAuthorities(authorities)
                 .build();
         return user;
     }

@@ -61,4 +61,14 @@ public class Tenant extends BaseEntity{
     public void setUrl(String url) {
         this.url = url;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "name='" + name + '\'' +
+/*                ", description='" + description + '\'' +
+                ", logo='" + logo + '\'' +
+                ", url='" + url + '\'' +*/
+                '}';
+    }
 }
