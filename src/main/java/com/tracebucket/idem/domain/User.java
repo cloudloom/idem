@@ -227,7 +227,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @Override
     public Map<String, Object> getTenantInformation() {
         Map<String, Set<Tenant>> tenants = new HashMap<String, Set<Tenant>>();
-        tenants.put("TENANT_INFO", this.tenantInformation);
+        tenants.put("TENANT_ID", this.tenantInformation);
         return Collections.unmodifiableMap(tenants);
     }
 
