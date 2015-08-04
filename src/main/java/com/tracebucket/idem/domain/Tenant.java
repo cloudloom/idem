@@ -7,8 +7,8 @@ import javax.persistence.*;
 /**
  * Created by Vishwajit on 03-08-2015.
  */
-@Entity(name = "IDEM_TENANT")
-@Table(name = "IDEM_TENANT")
+@Entity(name = "TENANT")
+@Table(name = "TENANT")
 public class Tenant extends BaseEntity{
 
     @Column(name = "NAME", unique = true, nullable = false)
@@ -23,7 +23,7 @@ public class Tenant extends BaseEntity{
     @Basic(fetch = FetchType.EAGER)
     private String logo;
 
-    @Column(name = "URL", unique = true, nullable = false)
+    @Column(name = "URL", unique = true)
     @Basic(fetch = FetchType.EAGER)
     private String url;
 
