@@ -22,6 +22,7 @@ public class ClientResource extends BaseResource {
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
     private Map<String, String> additionalInformation = new LinkedHashMap<String, String>();
+    private TenantResource tenant;
 
     public String getClientId() {
         return clientId;
@@ -53,6 +54,14 @@ public class ClientResource extends BaseResource {
 
     public void setResourceIds(Set<String> resourceIds) {
         this.resourceIds = resourceIds;
+    }
+
+    public TenantResource getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(TenantResource tenant) {
+        this.tenant = tenant;
     }
 
     public Set<String> getAuthorizedGrantTypes() {

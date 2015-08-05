@@ -2,6 +2,7 @@ package com.tracebucket.idem.test.builder;
 
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
+import com.tracebucket.idem.rest.resource.TenantResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 
 import java.util.*;
@@ -19,7 +20,7 @@ public class UserResourceBuilder {
     private boolean credentialsNonExpired;
     private boolean enabled;
     private Set<GroupResource> groups = new HashSet<>(0);
-    private Map<String, String> tenantInformation = new LinkedHashMap<String, String>();
+    private Set<TenantResource> tenantInformation = new HashSet<TenantResource>(0);
 
     private UserResourceBuilder() {}
 
@@ -67,7 +68,7 @@ public class UserResourceBuilder {
         return this;
     }
 
-    public UserResourceBuilder withTenantInformation(Map<String, String> tenantInformation) {
+    public UserResourceBuilder withTenantInformation(Set<TenantResource> tenantInformation) {
         this.tenantInformation = tenantInformation;
         return this;
     }

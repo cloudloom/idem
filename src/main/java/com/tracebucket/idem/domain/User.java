@@ -51,11 +51,10 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @Basic(fetch = FetchType.EAGER)
     private boolean enabled;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "MESSAGE")
-    @Column(name = "TENANT_INFO", nullable = true)
-    @CollectionTable(name = "USER_TENANT_INFORMATION", joinColumns = @JoinColumn(name = "USER__ID"))
-    private Map<String, String> tenantInformation = new LinkedHashMap<String, String>();
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_TENANT", joinColumns = @JoinColumn(name = "USER__ID"),
+                inverseJoinColumns = @JoinColumn(name = "TENANT__ID"))
+    private Set<Tenant> tenantInformation = new HashSet<Tenant>(0);
 
     public User() {}
 
@@ -227,15 +226,17 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
 
     @Override
     public Map<String, Object> getTenantInformation() {
-        return Collections.unmodifiableMap(this.tenantInformation);
+        Map<String, Set<Tenant>> tenants = new HashMap<String, Set<Tenant>>();
+        tenants.put("TENANT_ID", this.tenantInformation);
+        return Collections.unmodifiableMap(tenants);
     }
 
-    public void setAdditionalInformation(Map<String, String> tenantInformation) {
-        this.tenantInformation = new LinkedHashMap<String, String>(
-                tenantInformation);
+    public void setAdditionalInformation(Set<Tenant> tenantInformation) {
+        this.tenantInformation.clear();
+        this.tenantInformation.addAll(tenantInformation);
     }
 
-    public void addTenantInformation(String key, String value) {
-        this.tenantInformation.put(key, value);
+    public void addTenantInformation(Tenant tenant) {
+        this.tenantInformation.add(tenant);
     }
 }

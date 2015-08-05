@@ -2,9 +2,11 @@ package com.tracebucket.idem.rest.assembler.entity;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Group;
+import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
+import com.tracebucket.idem.rest.resource.TenantResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.tron.assembler.AssemblerResolver;
 import com.tracebucket.tron.assembler.EntityAssembler;
@@ -37,7 +39,7 @@ public class UserEntityAssembler extends EntityAssembler<User, UserResource> {
             user.setPassive(resource.isPassive());
             user.setAuthorities(assemblerResolver.resolveEntityAssembler(Authority.class, AuthorityResource.class).toEntities(resource.getAuthorities(), Authority.class));
             user.setGroups(assemblerResolver.resolveEntityAssembler(Group.class, GroupResource.class).toEntities(resource.getGroups(), Group.class));
-            user.setAdditionalInformation(resource.getTenantInformation());
+            user.setAdditionalInformation(assemblerResolver.resolveEntityAssembler(Tenant.class, TenantResource.class).toEntities(resource.getTenantInformation(), Tenant.class));
             user.setAccountNonExpired(resource.isAccountNonExpired());
             user.setAccountNonLocked(resource.isAccountNonLocked());
             user.setCredentialsNonExpired(resource.isCredentialsNonExpired());

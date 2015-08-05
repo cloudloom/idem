@@ -2,6 +2,7 @@ package com.tracebucket.idem.test.builder;
 
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.ClientResource;
+import com.tracebucket.idem.rest.resource.TenantResource;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -24,6 +25,7 @@ public class ClientResourceBuilder {
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
     private Map<String, String> additionalInformation = new LinkedHashMap<>();
+    private TenantResource tenant;
 
     private ClientResourceBuilder() {}
 
@@ -86,6 +88,11 @@ public class ClientResourceBuilder {
         return this;
     }
 
+    public ClientResourceBuilder withTenant(TenantResource tenant) {
+        this.tenant = tenant;
+        return this;
+    }
+
     public ClientResource build() {
         ClientResource client = new ClientResource();
         client.setAccessTokenValiditySeconds(this.accessTokenValiditySeconds);
@@ -99,6 +106,7 @@ public class ClientResourceBuilder {
         client.setRegisteredRedirectUris(this.registeredRedirectUris);
         client.setResourceIds(this.resourceIds);
         client.setScope(this.scope);
+        client.setTenant(this.tenant);
         return client;
     }
 }

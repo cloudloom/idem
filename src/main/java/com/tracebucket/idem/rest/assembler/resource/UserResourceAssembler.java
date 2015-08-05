@@ -2,9 +2,11 @@ package com.tracebucket.idem.rest.assembler.resource;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Group;
+import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
+import com.tracebucket.idem.rest.resource.TenantResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.tron.assembler.AssemblerResolver;
 import com.tracebucket.tron.assembler.ResourceAssembler;
@@ -35,14 +37,17 @@ public class UserResourceAssembler extends ResourceAssembler<UserResource, User>
                     authorities.stream().forEach(a -> authorityList.add((Authority)a));
                     user.setAuthorities(assemblerResolver.resolveResourceAssembler(AuthorityResource.class, Authority.class).toResources(authorityList, AuthorityResource.class));
                 }
-                Map<String, Object> tenantInformation = entity.getTenantInformation();
-                Map<String, String> tenantInformation2 = new HashMap<String, String>();
-                Set<Map.Entry<String, Object>> entries = tenantInformation.entrySet();
-                entries.forEach(e -> tenantInformation2.put(e.getKey(), (String)e.getValue()));
                 user.setUid(entity.getEntityId().getId());
                 user.setPassive(entity.isPassive());
                 user.setGroups(assemblerResolver.resolveResourceAssembler(GroupResource.class, Group.class).toResources(entity.getGroups(), GroupResource.class));
-                user.setTenantInformation(tenantInformation2);
+                if(entity.getTenantInformation() != null && entity.getTenantInformation().size() > 0) {
+                    if(entity.getTenantInformation().containsKey("TENANT_INFO")) {
+                        Set<Tenant> tenants = (Set<Tenant>)entity.getTenantInformation().get("TENANT_INFO");
+                        if(tenants != null && tenants.size() > 0) {
+                            user.setTenantInformation(assemblerResolver.resolveResourceAssembler(TenantResource.class, Tenant.class).toResources(tenants, TenantResource.class));
+                        }
+                    }
+                }
                 user.setAccountNonExpired(entity.isAccountNonExpired());
                 user.setAccountNonLocked(entity.isAccountNonLocked());
                 user.setCredentialsNonExpired(entity.isCredentialsNonExpired());

@@ -2,6 +2,7 @@ package com.tracebucket.idem.test.builder;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Client;
+import com.tracebucket.idem.domain.Tenant;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class ClientBuilder {
     private Integer accessTokenValiditySeconds;
     private Integer refreshTokenValiditySeconds;
     private Map<String, String> additionalInformation = new LinkedHashMap<>();
+    private Tenant tenant;
 
     private ClientBuilder() {}
 
@@ -83,6 +85,11 @@ public class ClientBuilder {
         return this;
     }
 
+    public ClientBuilder withTenant(Tenant tenant) {
+        this.tenant = tenant;
+        return this;
+    }
+
     public Client build() {
         Client client = new Client();
         client.setAccessTokenValiditySeconds(this.accessTokenValiditySeconds);
@@ -96,6 +103,7 @@ public class ClientBuilder {
         client.setRegisteredRedirectUri(this.registeredRedirectUris);
         client.setResourceIds(this.resourceIds);
         client.setScope(this.scope);
+        client.setTenant(this.tenant);
         return client;
     }
 }
