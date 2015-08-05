@@ -20,6 +20,10 @@ public class Authority extends BaseEntity implements GrantedAuthority{
     @Basic(fetch = FetchType.EAGER)
     private String role;
 
+    @Column(name = "PRIORITY")
+    @Basic(fetch = FetchType.EAGER)
+    private Integer priority;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "AUTHORITY_SCOPE", joinColumns = @JoinColumn(name = "AUTHORITY__ID"))
     private Set<String> scopes = new HashSet<String>(0);
@@ -63,6 +67,16 @@ public class Authority extends BaseEntity implements GrantedAuthority{
     public String toString() {
         return this.role;
     }
+
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
+
 
     public Set<String> getScopes() {
         return scopes;
