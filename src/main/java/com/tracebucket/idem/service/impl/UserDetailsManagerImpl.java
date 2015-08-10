@@ -2,9 +2,11 @@ package com.tracebucket.idem.service.impl;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Group;
+import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import com.tracebucket.idem.repository.jpa.GroupRepository;
+import com.tracebucket.idem.repository.jpa.TenantRepository;
 import com.tracebucket.idem.repository.jpa.UserRepository;
 import com.tracebucket.tron.rest.exception.X1Exception;
 import org.slf4j.Logger;
@@ -40,6 +42,9 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TenantRepository tenantRepository;
 
     @Autowired
     private GroupRepository groupRepository;
@@ -196,6 +201,16 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
                     });
                 }
                 user.setAuthorities(new HashSet<Authority>(0));
+                Set<Tenant> tenants = new HashSet<Tenant>();
+                if(user.getRawTenantInformation() != null && user.getRawTenantInformation().size() > 0) {
+                    user.getRawTenantInformation().stream().forEach(tenant -> {
+                        tenants.add(tenantRepository.findByName(tenant.getName()));
+                    });
+                }
+                if(tenants.size() > 0) {
+                    user.getRawTenantInformation().clear();
+                    user.getRawTenantInformation().addAll(tenants);
+                }
                 userRepository.save((User) user);
                 if (getEnableAuthorities()) {
                     if(newAuthorities.size() > 0) {

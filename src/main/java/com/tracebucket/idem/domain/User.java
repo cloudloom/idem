@@ -231,6 +231,10 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
         return Collections.unmodifiableMap(tenants);
     }
 
+    public Set<Tenant> getRawTenantInformation() {
+        return this.tenantInformation;
+    }
+
     public void setAdditionalInformation(Set<Tenant> tenantInformation) {
         this.tenantInformation.clear();
         this.tenantInformation.addAll(tenantInformation);
