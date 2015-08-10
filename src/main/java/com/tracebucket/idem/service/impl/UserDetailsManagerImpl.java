@@ -179,6 +179,28 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
     @Override
     public void createUser(UserDetails user) {
         validateUserDetails(user);
+        Set<Authority> newAuthorities = new HashSet<Authority>();
+        if(((User)user).getRawAuthorities() != null) {
+            Set<Authority> authorities = ((User)user).getRawAuthorities();
+            authorities.stream().forEach(authority -> {
+                Authority authority1 = new Authority();
+                authority1.setRole(authority.getRole());
+                authority1.setScopes(authority.getScopes());
+                authority1.setEntityId(null);
+                newAuthorities.add(authority1);
+            });
+        }
+        ((User)user).setAuthorities(new HashSet<Authority>(0));
+        Set<Tenant> tenants = new HashSet<Tenant>();
+        if(((User)user).getRawTenantInformation() != null && ((User)user).getRawTenantInformation().size() > 0) {
+            ((User)user).getRawTenantInformation().stream().forEach(tenant -> {
+                tenants.add(tenantRepository.findByName(tenant.getName()));
+            });
+        }
+        if(tenants.size() > 0) {
+            ((User)user).getRawTenantInformation().clear();
+            ((User)user).getRawTenantInformation().addAll(tenants);
+        }
         userRepository.save((User)user);
         if (getEnableAuthorities()) {
             insertUserAuthorities(user);
