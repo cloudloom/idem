@@ -23,7 +23,7 @@ public class UserController {
         return user;
     }
 
-    @RequestMapping(value = "/oauth/token/revoke", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/token/revoke", method = RequestMethod.POST)
     public @ResponseBody void create(@RequestParam("token") String value) throws InvalidClientException {
         jpaTokenStore.removeAccessToken(value);
     }
