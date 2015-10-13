@@ -38,7 +38,8 @@ public class OAuth2ResourceConfiguration extends ResourceServerConfigurerAdapter
                 .antMatchers(HttpMethod.POST, "/admin/**").access("#oauth2.hasScope('idem-write')")
                 .antMatchers(HttpMethod.PATCH, "/admin/**").access("#oauth2.hasScope('idem-write')")
                 .antMatchers(HttpMethod.PUT, "/admin/**").access("#oauth2.hasScope('idem-write')")
-                .antMatchers(HttpMethod.DELETE, "/admin/**").access("#oauth2.hasScope('idem-write')");
+                .antMatchers(HttpMethod.DELETE, "/admin/**").access("#oauth2.hasScope('idem-write')")
+                .antMatchers(HttpMethod.POST, "/user/token/**").access("#oauth2.hasScope('idem-write')");
         http.addFilterAfter(new OncePerRequestFilter() {
             @Override
             protected void doFilterInternal(HttpServletRequest request,
