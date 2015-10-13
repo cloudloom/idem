@@ -52,7 +52,7 @@ public class ClientControllerTest {
 
     @Before
     public void setUp() {
-        accessToken = accessTokenReceiver.receive("idem-admin", "idem-admin-secret", "admin", "admin");
+        accessToken = accessTokenReceiver.receive("idem-admin", "sequre-admin-secret", "admin", "admin");
         restTemplate = new RestTemplate();
     }
 

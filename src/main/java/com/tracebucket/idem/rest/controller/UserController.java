@@ -81,12 +81,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/password/reset", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> resetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword) {
+    public ResponseEntity<User> resetPassword(@RequestParam("userName") String userName, @RequestParam("newPassword") String newPassword) {
         userDetailsManagerImpl.resetPassword(userName, newPassword);
         User user = (User) userDetailsManagerImpl.loadUserByUsername(userName);
         if (user != null) {
             if(user.getPassword() != null && user.getPassword().equals(newPassword)) {
-                return new ResponseEntity(true, HttpStatus.OK);
+                user.setPassword(null);
+                return new ResponseEntity<User>(user, HttpStatus.OK);
             }
         }
         return new ResponseEntity(HttpStatus.NOT_MODIFIED);
