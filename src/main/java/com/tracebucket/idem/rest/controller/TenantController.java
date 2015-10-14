@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Vishwajit on 03-08-2015.
@@ -75,6 +76,16 @@ public class TenantController {
         if(tenant != null) {
             TenantResource tenantResource = assemblerResolver.resolveResourceAssembler(TenantResource.class, Tenant.class).toResource(tenant, TenantResource.class);
             return new ResponseEntity<TenantResource>(tenantResource, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(value = "/tenants", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<TenantResource>> findAll() {
+        List<Tenant> tenants = tenantServiceImpl.findAll();
+        if(tenants != null && tenants.size() > 0) {
+            Set<TenantResource> tenantResources = assemblerResolver.resolveResourceAssembler(TenantResource.class, Tenant.class).toResources(tenants, TenantResource.class);
+            return new ResponseEntity<Set<TenantResource>>(tenantResources, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 /**
  * Created by Vishwajit on 03-08-2015.
  */
@@ -28,6 +30,10 @@ public class TenantServiceImpl{
 
     public Tenant findOne(String uid) {
         return tenantRepository.findOne(new EntityId(uid));
+    }
+
+    public List<Tenant> findAll() {
+        return tenantRepository.findAll();
     }
 
     public Tenant findByName(String name) {
