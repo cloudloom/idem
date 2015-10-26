@@ -51,7 +51,7 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
                 .and()
-                .authorizeRequests().anyRequest().authenticated().expressionHandler(webExpressionHandler());
+                .authorizeRequests().anyRequest().authenticated().expressionHandler(webExpressionHandler()).and().csrf().disable();
         // @formatter:on
     }
 
