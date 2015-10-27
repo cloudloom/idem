@@ -3,4 +3,5 @@ com.tracebucket.idem.autoconfig.AssemblerConfiguration,\
 com.tracebucket.idem.autoconfig.JPAConfiguration,\
 com.tracebucket.idem.autoconfig.ServiceConfiguration,\
 com.tracebucket.idem.autoconfig.WebConfiguration,\
-com.tracebucket.idem.autoconfig.InitialConfiguration
+com.tracebucket.idem.autoconfig.InitialConfiguration,\
+com.tracebucket.idem.autoconfig.OAuth2ResourceConfiguration

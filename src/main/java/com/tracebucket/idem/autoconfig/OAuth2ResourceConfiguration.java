@@ -1,5 +1,7 @@
-package com.tracebucket.idem.config;
+package com.tracebucket.idem.autoconfig;
 
+import com.tracebucket.tron.autoconfig.NonExistingResourceConfigurationBeans;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
 import org.springframework.security.oauth2.provider.authentication.TokenExtractor;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -22,6 +25,8 @@ import java.io.IOException;
  * @since 11-03-15
  */
 @Configuration
+@Conditional(value = NonExistingResourceConfigurationBeans.class)
+@Component(value = "resourceConfiguration")
 @EnableResourceServer
 public class OAuth2ResourceConfiguration extends ResourceServerConfigurerAdapter {
 
