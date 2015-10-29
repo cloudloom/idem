@@ -334,7 +334,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
     }
 
     public void resetPassword(String userName, String newPassword) {
-        UserDetails user = loadUserByUsername(userName);
+        UserDetails user = loadUserByUserName(userName);
         if(user != null && user.getUsername().equals(userName)) {
             userRepository.updatePassword(newPassword, userName);
             userCache.removeUserFromCache(userName);
@@ -377,6 +377,18 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        try {
+            User user = userRepository.findByUsername(username);
+            if (user != null) {
+                org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());
+                return u;            }
+        } catch(Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    public UserDetails loadUserByUserName(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByUsername(username);
         //org.springframework.security.core.userdetails.User u = new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),user.isCredentialsNonExpired(), user.isAccountNonLocked(), user.getAuthorities());

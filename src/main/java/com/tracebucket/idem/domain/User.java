@@ -85,7 +85,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
 
     @Override
     public void eraseCredentials() {
-        //password = null;
+        password = null;
 
     }
 

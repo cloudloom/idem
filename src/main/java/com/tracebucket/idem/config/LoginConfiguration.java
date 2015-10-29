@@ -15,12 +15,19 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.access.vote.RoleHierarchyVoter;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author FFL
@@ -47,7 +54,11 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
         http
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin()
+                    .loginPage("/login")
+                    .failureHandler(new ExceptionMappingAuthenticationFailureHandler())
+                    .failureUrl("/login?error")
+                    .permitAll()
                 .and()
                 .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
                 .and()
@@ -63,7 +74,10 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.parentAuthenticationManager(authenticationManager);
+        List<AuthenticationProvider> authenticationProviders = new ArrayList<AuthenticationProvider>();
+        authenticationProviders.add(new DaoAuthenticationProvider());
+        CustomProviderManager customProviderManager = new CustomProviderManager(authenticationProviders);
+        auth.parentAuthenticationManager(customProviderManager);
         auth.userDetailsService(userDetailsManager);
     }
 

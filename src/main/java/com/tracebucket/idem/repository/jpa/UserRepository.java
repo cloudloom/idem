@@ -12,7 +12,11 @@ import org.springframework.data.repository.query.Param;
  * @since 12-03-2015
  */
 public interface UserRepository extends BaseEntityRepository<User,EntityId> {
-    public User findByUsername(String username);
+    //public User findByUsername(String username);
+
+    @Query(value = "select u from com.tracebucket.idem.domain.User u where u.username = :username")
+    public User findByUsername(@Param("username") String username);
+
     public void deleteByUsername(String username);
 
     @Modifying(clearAutomatically = true)
