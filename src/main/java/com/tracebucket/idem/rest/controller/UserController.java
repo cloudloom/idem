@@ -1,10 +1,14 @@
 package com.tracebucket.idem.rest.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.User;
+import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
 import com.tracebucket.tron.assembler.AssemblerResolver;
 import com.tracebucket.tron.rest.exception.X1Exception;
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsManagerImpl userDetailsManagerImpl;
+
+    @Autowired
+    private Mapper mapper;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
@@ -118,8 +125,24 @@ public class UserController {
     @RequestMapping(value = "/users/userNames", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<UserResource>> loadUserByUsername(@RequestBody List<String> userNames) {
         List<User> users = userDetailsManagerImpl.loadUserByUserNames(userNames);
-        if(users != null) {
-            Set<UserResource> userResources = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(users, UserResource.class);
+        if(users != null && users.size() > 0) {
+            Set<UserResource> userResources = new HashSet<UserResource>();
+            users.stream().forEach(user -> {
+                UserResource userResource = new UserResource();
+                userResource.setUsername(user.getUsername());
+                if(user.getRawAuthorities() != null) {
+                    Set<AuthorityResource> authorityResources = new HashSet<AuthorityResource>();
+                    for(Authority authority : user.getRawAuthorities()) {
+                        AuthorityResource authorityResource = new AuthorityResource();
+                        mapper.map(authority, authorityResource);
+                        authorityResources.add(authorityResource);
+                    }
+                    if(authorityResources.size() > 0) {
+                        userResource.setAuthorities(authorityResources);
+                    }
+                }
+                userResources.add(userResource);
+            });
             return new ResponseEntity<Set<UserResource>>(userResources, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.NOT_FOUND);
