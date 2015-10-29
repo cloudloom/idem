@@ -75,7 +75,9 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         List<AuthenticationProvider> authenticationProviders = new ArrayList<AuthenticationProvider>();
-        authenticationProviders.add(new DaoAuthenticationProvider());
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsManager);
+        authenticationProviders.add(daoAuthenticationProvider);
         CustomProviderManager customProviderManager = new CustomProviderManager(authenticationProviders);
         auth.parentAuthenticationManager(customProviderManager);
         auth.userDetailsService(userDetailsManager);
