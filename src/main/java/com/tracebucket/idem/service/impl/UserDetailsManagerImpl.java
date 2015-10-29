@@ -388,6 +388,10 @@ public class UserDetailsManagerImpl implements UserDetailsManager, GroupManager{
         return null;
     }
 
+    public List<User> loadUserByUserNames(List<String> userNames) throws UsernameNotFoundException {
+        return userRepository.findByUserNames(userNames);
+    }
+
     public UserDetails loadUserByUserName(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByUsername(username);

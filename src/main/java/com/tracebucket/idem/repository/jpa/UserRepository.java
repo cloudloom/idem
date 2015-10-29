@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 /**
  * @author FFL
  * @since 12-03-2015
@@ -16,6 +18,9 @@ public interface UserRepository extends BaseEntityRepository<User,EntityId> {
 
     @Query(value = "select u from com.tracebucket.idem.domain.User u where u.username = :username")
     public User findByUsername(@Param("username") String username);
+
+    @Query(value = "select u from com.tracebucket.idem.domain.User u where u.username IN (:userNames)")
+    public List<User> findByUserNames(@Param("userNames") List<String> userNames);
 
     public void deleteByUsername(String username);
 

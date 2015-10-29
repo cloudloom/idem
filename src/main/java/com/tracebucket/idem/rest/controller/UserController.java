@@ -115,6 +115,16 @@ public class UserController {
         return new ResponseEntity<UserResource>(new UserResource(), HttpStatus.NOT_FOUND);
     }
 
+    @RequestMapping(value = "/users/userNames", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Set<UserResource>> loadUserByUsername(@RequestBody List<String> userNames) {
+        List<User> users = userDetailsManagerImpl.loadUserByUserNames(userNames);
+        if(users != null) {
+            Set<UserResource> userResources = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(users, UserResource.class);
+            return new ResponseEntity<Set<UserResource>>(userResources, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
     @RequestMapping(value = "/user/{userName}/group/{groupName}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResource> addUserToGroup(@PathVariable("userName") String userName, @PathVariable("groupName") String groupName) {
         userDetailsManagerImpl.addUserToGroup(userName, groupName);
