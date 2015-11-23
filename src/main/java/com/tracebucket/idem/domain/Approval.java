@@ -1,5 +1,6 @@
 package com.tracebucket.idem.domain;
 
+import com.tracebucket.idem.domain.enums.converter.ApprovalStatusConverter;
 import com.tracebucket.tron.ddd.domain.BaseEntity;
 
 import javax.persistence.*;
@@ -25,8 +26,8 @@ public class Approval extends BaseEntity {
     @Basic(fetch = FetchType.EAGER)
     private String scope;
 
-    @Column(name = "APPROVAL_STATUS", nullable = false, columnDefinition = "ENUM('APPROVED','DENIED') default 'DENIED'")
-    @Enumerated(EnumType.STRING)
+    @Column(name = "APPROVAL_STATUS")
+    @Convert(converter = ApprovalStatusConverter.class)
     private org.springframework.security.oauth2.provider.approval.Approval.ApprovalStatus approvalStatus;
 
     @Column(name = "EXPIRES_AT")
