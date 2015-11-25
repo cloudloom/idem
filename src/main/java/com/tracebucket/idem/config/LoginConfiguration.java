@@ -35,7 +35,7 @@ import java.util.List;
  */
 @Configuration
 @PropertySource(value = "classpath:rolesHierarchy.properties")
-@Order(-10)
+//@Order(-10)
 public class LoginConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginConfiguration.class);
