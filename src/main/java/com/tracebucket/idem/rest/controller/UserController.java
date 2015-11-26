@@ -1,13 +1,11 @@
 package com.tracebucket.idem.rest.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
 import com.tracebucket.tron.assembler.AssemblerResolver;
-import com.tracebucket.tron.rest.exception.X1Exception;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

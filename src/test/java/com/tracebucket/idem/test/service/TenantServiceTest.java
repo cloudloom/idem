@@ -4,9 +4,6 @@ import com.tracebucket.idem.IdemStarter;
 import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.service.impl.TenantServiceImpl;
 import com.tracebucket.idem.test.config.AccessTokenReceiverConfig;
-import com.tracebucket.idem.test.config.ApplicationTestConfig;
-import com.tracebucket.idem.test.config.JPATestConfig;
-import com.tracebucket.idem.test.config.WebTestConfig;
 import com.tracebucket.idem.test.fixture.TenantFixture;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +15,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Created by Vishwajit on 03-08-2015.

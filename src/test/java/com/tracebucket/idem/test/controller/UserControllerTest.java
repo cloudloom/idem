@@ -2,9 +2,6 @@ package com.tracebucket.idem.test.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.IdemStarter;
-import com.tracebucket.idem.domain.User;
-import com.tracebucket.idem.repository.jpa.AccessTokenRepository;
-import com.tracebucket.idem.repository.jpa.ApprovalRepository;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.UserResource;
@@ -25,13 +22,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.UUID;
 
 /**

@@ -3,8 +3,6 @@ package com.tracebucket.idem.test.fixture;
 import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.test.builder.UserBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**

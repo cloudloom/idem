@@ -1,6 +1,5 @@
 package com.tracebucket.idem.rest.assembler.entity;
 
-import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.rest.resource.TenantResource;
 import com.tracebucket.tron.assembler.AssemblerResolver;

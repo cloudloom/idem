@@ -3,8 +3,6 @@ package com.tracebucket.idem.rest.resource;
 import com.tracebucket.tron.assembler.BaseResource;
 
 import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
 
 public class UserResource extends BaseResource {

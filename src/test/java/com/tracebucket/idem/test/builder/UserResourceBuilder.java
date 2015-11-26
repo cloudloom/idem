@@ -5,7 +5,9 @@ import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.TenantResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author ssm

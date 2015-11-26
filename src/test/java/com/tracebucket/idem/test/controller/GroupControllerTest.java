@@ -2,8 +2,6 @@ package com.tracebucket.idem.test.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tracebucket.idem.IdemStarter;
-import com.tracebucket.idem.domain.Group;
-import com.tracebucket.idem.domain.User;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.GroupResource;
 import com.tracebucket.idem.rest.resource.UserResource;
@@ -30,9 +28,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 /**

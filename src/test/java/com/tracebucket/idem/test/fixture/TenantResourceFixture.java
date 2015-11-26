@@ -1,8 +1,6 @@
 package com.tracebucket.idem.test.fixture;
 
-import com.tracebucket.idem.domain.Tenant;
 import com.tracebucket.idem.rest.resource.TenantResource;
-import com.tracebucket.idem.test.builder.TenantBuilder;
 import com.tracebucket.idem.test.builder.TenantResourceBuilder;
 
 import java.util.UUID;

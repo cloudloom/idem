@@ -1,6 +1,5 @@
 package com.tracebucket.idem.autoconfig;
 
-import com.tracebucket.tron.autoconfig.NonExistingJpaDevBeans;
 import com.tracebucket.tron.autoconfig.NonExistingJpaProdBeans;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

@@ -9,8 +9,6 @@ import com.tracebucket.idem.init.defaults.UsersDefault;
 import com.tracebucket.idem.repository.jpa.AuthorityRepository;
 import com.tracebucket.idem.repository.jpa.ClientRepository;
 import com.tracebucket.idem.repository.jpa.UserRepository;
-import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
-import com.tracebucket.tron.autoconfig.NonExistingAssemblerBeans;
 import com.tracebucket.tron.autoconfig.NonExistingInitialConfigurationBeans;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
