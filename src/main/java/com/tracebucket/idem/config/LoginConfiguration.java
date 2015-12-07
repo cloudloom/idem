@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 @Configuration
 @PropertySource(value = "classpath:rolesHierarchy.properties")
-//@Order(-10)
+@Order(-10)
 public class LoginConfiguration extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginConfiguration.class);
