@@ -6,7 +6,7 @@
 
     <groupId>com.tracebucket.idem</groupId>
     <artifactId>idem</artifactId>
-    <version>4.2</version>
+    <version>4.3</version>
 
 
     <properties>
