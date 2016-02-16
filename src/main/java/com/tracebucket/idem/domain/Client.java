@@ -1,6 +1,8 @@
 package com.tracebucket.idem.domain;
 
 import com.tracebucket.tron.ddd.domain.BaseEntity;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -27,22 +29,27 @@ public class Client extends BaseEntity implements ClientDetails{
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "CLIENT_SCOPE", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<String> scope = new HashSet<String>(0);
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "CLIENT_RESOURCE_IDS", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<String> resourceIds = new HashSet<String>(0);
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "CLIENT_AUTHORISED_GRANT_TYPES", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<String> authorizedGrantTypes = new HashSet<String>(0);
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "CLIENT_REGISTERED_REDIRECT_URIS", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<String> registeredRedirectUris = new HashSet<String>(0);
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinTable(name = "CLIENT_AUTO_APPROVES_SCOPES", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<String> autoApproveScopes = new HashSet<String>(0);
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
@@ -51,6 +58,7 @@ public class Client extends BaseEntity implements ClientDetails{
             joinColumns = { @JoinColumn(name = "CLIENT__ID", referencedColumnName = "ID") },
             inverseJoinColumns={ @JoinColumn(name = "AUTHORITY__ID", referencedColumnName = "ID", unique = true) }
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Authority> authorities = new ArrayList<Authority>();
 
     @Column(name = "ACCESS_TOKEN_VALIDITY_SECONDS", nullable = true)
@@ -65,6 +73,7 @@ public class Client extends BaseEntity implements ClientDetails{
     @MapKeyColumn(name = "MESSAGE")
     @Column(name = "INFORMATION", nullable = true)
     @CollectionTable(name = "CLIENT_ADDITIONAL_INFORMATION", joinColumns = @JoinColumn(name = "CLIENT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Map<String, String> additionalInformation = new LinkedHashMap<String, String>();
 
     @OneToOne(fetch = FetchType.EAGER)

@@ -1,6 +1,8 @@
 package com.tracebucket.idem.domain;
 
 import com.tracebucket.tron.ddd.domain.BaseEntity;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,9 +32,11 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
             joinColumns={ @JoinColumn(name="USER__ID", referencedColumnName="ID") },
             inverseJoinColumns={ @JoinColumn(name="AUTHORITY__ID", referencedColumnName="ID"/*, unique=true*/) }
     )
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<Authority> authorities = new HashSet<Authority>(0);
 
     @ManyToMany(mappedBy = "members", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<Group> groups = new HashSet<>(0);
 
     @Column(name = "ACCOUNT_NON_EXPIRED", columnDefinition = "boolean default false")
@@ -54,6 +58,7 @@ public class User extends BaseEntity implements UserDetails, CredentialsContaine
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_TENANT", joinColumns = @JoinColumn(name = "USER__ID"),
                 inverseJoinColumns = @JoinColumn(name = "TENANT__ID"))
+    @Fetch(value = FetchMode.SUBSELECT)
     private Set<Tenant> tenantInformation = new HashSet<Tenant>(0);
 
     public User() {}
