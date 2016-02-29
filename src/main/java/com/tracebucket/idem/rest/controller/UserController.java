@@ -49,7 +49,7 @@ public class UserController {
             userDetailsManagerImpl.createUsers(users);
             List<User> loadedUsers = new ArrayList<>();
             users.stream().forEach(user -> {
-                loadedUsers.add((User)userDetailsManagerImpl.loadUserByUsername(user.getUsername()));
+                loadedUsers.add((User)userDetailsManagerImpl.loadUserByUserName(user.getUsername()));
             });
             if (loadedUsers != null && loadedUsers.size() > 0) {
                 Set<UserResource> userResourceSet = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResources(loadedUsers, UserResource.class);
