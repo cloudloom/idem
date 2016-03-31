@@ -40,21 +40,30 @@ public class TenantTokenEnhancer implements TokenEnhancer{
 
         Tenant tenant = client.getTenant();
 
-        Map<String, Object> tenantInformation = user.getTenantInformation();
+        if(user != null) {
 
-        if(tenantInformation != null && tenantInformation.containsKey("TENANT_ID")) {
-            Set<Tenant> tenants = (Set<Tenant>)tenantInformation.get("TENANT_ID");
-            if(tenants != null && tenants.size() > 0) {
-                for(Tenant tenant1 : tenants) {
-                    if(tenant1.getName().equals(tenant.getName())) {
-                        Map<String, Object> additionalInfo = new HashMap<String, Object>();
-                        additionalInfo.put("TENANT_ID", tenant1.getName());
-                        ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(additionalInfo);
-                        return accessToken;
+            Map<String, Object> tenantInformation = user.getTenantInformation();
 
+            if (tenantInformation != null && tenantInformation.containsKey("TENANT_ID")) {
+                Set<Tenant> tenants = (Set<Tenant>) tenantInformation.get("TENANT_ID");
+                if (tenants != null && tenants.size() > 0) {
+                    for (Tenant tenant1 : tenants) {
+                        if (tenant1.getName().equals(tenant.getName())) {
+                            Map<String, Object> additionalInfo = new HashMap<String, Object>();
+                            additionalInfo.put("TENANT_ID", tenant1.getName());
+                            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+                            return accessToken;
+
+                        }
                     }
                 }
             }
+        } else {// Added because no tenant_id is returned from LDAP In case of SpiceJet
+            //Since no tenant_id is returned tenant_id of client is assigned to users' tenant_id
+            Map<String, Object> additionalInfo = new HashMap<String, Object>();
+            additionalInfo.put("TENANT_ID", tenant.getName());
+            ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
+            return accessToken;
         }
         return accessToken;
     }

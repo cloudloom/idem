@@ -1,11 +1,14 @@
-package com.tracebucket.idem.config;
+package com.tracebucket.idem.autoconfig;
 
+import com.tracebucket.idem.autoconfig.conditional.NonExistingLoginConfigurationBeans;
+import com.tracebucket.idem.config.CustomProviderManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
@@ -33,6 +36,7 @@ import java.util.List;
  * @since 11/03/15
  */
 @Configuration
+@Conditional(value = NonExistingLoginConfigurationBeans.class)
 @PropertySource(value = "classpath:rolesHierarchy.properties")
 @Order(-10)
 public class LoginConfiguration extends WebSecurityConfigurerAdapter {
@@ -43,9 +47,6 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
     private String rolesHierarchy;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     @Qualifier("userDetailsManagerImpl")
     private UserDetailsManager userDetailsManager;
 
@@ -54,14 +55,14 @@ public class LoginConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
                 .formLogin()
-                    .loginPage("/login")
-                    .failureHandler(new ExceptionMappingAuthenticationFailureHandler())
-                    .failureUrl("/login?error")
-                    .permitAll()
+                .loginPage("/login")
+                .failureHandler(new ExceptionMappingAuthenticationFailureHandler())
+                .failureUrl("/login?error")
+                .permitAll()
                 .and()
                 .requestMatchers().antMatchers("/login", "/oauth/authorize", "/oauth/confirm_access")
                 .and()
-                .authorizeRequests().anyRequest().authenticated().expressionHandler(webExpressionHandler()).and().csrf().disable();
+                .authorizeRequests().anyRequest().authenticated().and().csrf().disable();
         // @formatter:on
     }
 
