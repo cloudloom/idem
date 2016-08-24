@@ -2,6 +2,7 @@ package com.tracebucket.idem.rest.controller;
 
 import com.tracebucket.idem.domain.Authority;
 import com.tracebucket.idem.domain.User;
+import com.tracebucket.idem.repository.jpa.UserRepository;
 import com.tracebucket.idem.rest.resource.AuthorityResource;
 import com.tracebucket.idem.rest.resource.UserResource;
 import com.tracebucket.idem.service.impl.UserDetailsManagerImpl;
@@ -30,11 +31,15 @@ public class UserController {
     @Autowired
     private Mapper mapper;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResource> createUser(@RequestBody UserResource userResource) {
         User user = assemblerResolver.resolveEntityAssembler(User.class, UserResource.class).toEntity(userResource, User.class);
         userDetailsManagerImpl.createUser(user);
-        user = (User)userDetailsManagerImpl.loadUserByUsername(user.getUsername());
+        //user = (User)userDetailsManagerImpl.loadUserByUsername(user.getUsername());
+        user = userRepository.findByUsername(user.getUsername());
         if(user != null) {
             userResource = assemblerResolver.resolveResourceAssembler(UserResource.class, User.class).toResource(user, UserResource.class);
             return new ResponseEntity<UserResource>(userResource, HttpStatus.OK);

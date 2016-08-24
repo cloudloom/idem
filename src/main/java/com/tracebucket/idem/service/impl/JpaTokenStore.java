@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.AuthenticationKeyGener
 import org.springframework.security.oauth2.provider.token.DefaultAuthenticationKeyGenerator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -79,6 +80,7 @@ public class JpaTokenStore implements TokenStore{
         return authentication;
     }
 
+    @Transactional
     public void removeAccessToken(String token) {
         accessTokenRepository.deleteByTokenId(extractTokenKey(token));
     }
